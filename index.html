@@ -1167,15 +1167,16 @@ footer{background:var(--navy-deep);border-top:1px solid var(--cb);padding:56px 5
       <div class="contact-form-wrap">
         <div style="font-family:'Space Mono',sans-serif;font-size:10px;letter-spacing:3px;color:var(--mint);text-transform:uppercase;margin-bottom:28px;">Project Enquiry Form</div>
 
-        <form id="cifer-form" onsubmit="submitForm(event)">
-          <!-- Web3Forms access key — replace with yours from web3forms.com -->
-          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY_HERE">
-          <!-- Subject line in your inbox -->
-          <input type="hidden" name="subject" value="New CIFER Website Enquiry">
-          <!-- Redirect after submit — optional, set to your page URL -->
-          <input type="hidden" name="redirect" value="false">
-          <!-- Honeypot spam protection -->
-          <input type="checkbox" name="botcheck" class="form-hp" tabindex="-1" autocomplete="off">
+      <form action="https://formspree.io/f/mjgjavkd" method="POST">
+
+  <!-- Email subject -->
+  <input type="hidden" name="_subject" value="New CIFER Website Enquiry">
+
+  <!-- Redirect after submit -->
+  <input type="hidden" name="_next" value="thankyou.html">
+
+  <!-- Honeypot spam protection -->
+  <input type="text" name="_gotcha" class="form-hp">
 
           <div class="form-row">
             <div class="form-group"><label class="form-label">Full Name *</label><input type="text" name="name" class="form-input" placeholder="Your full name" required></div>

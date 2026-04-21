@@ -6,102 +6,157 @@
 <title>CIFER — Design. Develop. Disrupt.</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ROOT VARIABLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 :root{
   --mint:#C8E6C0;--mint-light:#E4F4E0;--mint-dark:#8BC48A;
   --navy:#0B1E3D;--navy-mid:#0F2448;--navy-light:#162E56;--navy-deep:#060F1E;
   --amber:#F5A623;--amber-dark:#D4891A;--sky:#5BC8F0;
   --white:#F4F9F4;--gray:#7A9BAD;
-  --card-border:rgba(200,230,192,0.12);
+  --cb:rgba(200,230,192,0.12); /* card border */
   --tr:cubic-bezier(0.23,1,0.32,1);
+  /* base body font size increased by 2pt: was 16px → 18px */
+  --body-fs:18px;
+  --body-sm:15px;
+  --body-xs:13px;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'Barlow',sans-serif;background:var(--navy-deep);color:var(--white);overflow-x:hidden;min-height:100vh;}
+body{font-family:'Barlow',sans-serif;font-size:var(--body-fs);background:var(--navy-deep);color:var(--white);overflow-x:hidden;min-height:100vh;}
 ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--navy-deep);}::-webkit-scrollbar-thumb{background:var(--mint-dark);border-radius:3px;}
 
-/* ══ NAV ══ */
-#nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(6,15,30,0.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--card-border);transition:border-color 0.3s;}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   NAV
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(6,15,30,0.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--cb);transition:border-color 0.3s;}
 .nav-brand{display:flex;align-items:center;gap:12px;cursor:pointer;background:none;border:none;}
-.nav-logo-img{height:52px;width:auto;object-fit:contain;}
-.nav-tagline{font-family:'Space Mono',sans-serif;font-size:7.5px;color:var(--mint);letter-spacing:2px;text-transform:uppercase;margin-top:2px;line-height:1.4;}
+.nav-logo-wrap{height:54px;display:flex;align-items:center;}
+.nav-logo-wrap img{height:54px;width:auto;object-fit:contain;display:block;}
+.nav-logo-svg{height:54px;display:flex;align-items:center;background:var(--mint);padding:6px 12px;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
+.nav-tagline-wrap{display:flex;flex-direction:column;justify-content:center;}
+.nav-wordmark{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:4px;color:var(--white);}
+.nav-tagline{font-family:'Space Mono',sans-serif;font-size:8px;color:var(--mint);letter-spacing:2px;text-transform:uppercase;}
 .nav-links{display:flex;align-items:center;gap:2px;}
-.nav-link{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);background:none;border:none;padding:8px 15px;cursor:pointer;position:relative;transition:color 0.2s;text-decoration:none;display:flex;align-items:center;}
+.nav-link{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);background:none;border:none;padding:8px 14px;cursor:pointer;position:relative;transition:color 0.2s;text-decoration:none;display:flex;align-items:center;}
 .nav-link::after{content:'';position:absolute;bottom:4px;left:50%;right:50%;height:1px;background:var(--mint);transition:all 0.3s var(--tr);}
 .nav-link:hover,.nav-link.active{color:var(--mint);}
-.nav-link:hover::after,.nav-link.active::after{left:15px;right:15px;}
-.nav-cta-link{background:var(--mint);color:var(--navy)!important;padding:9px 22px!important;font-weight:700!important;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:background 0.2s!important;}
+.nav-link:hover::after,.nav-link.active::after{left:14px;right:14px;}
+.nav-cta-link{background:var(--mint);color:var(--navy)!important;padding:9px 20px!important;font-weight:700!important;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:background 0.2s!important;}
 .nav-cta-link:hover{background:var(--mint-dark)!important;}
 .nav-cta-link::after{display:none;}
 .nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
 .nav-burger span{display:block;width:24px;height:2px;background:var(--white);transition:all 0.3s;}
-.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;z-index:999;background:rgba(6,15,30,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--card-border);padding:20px 28px;flex-direction:column;gap:2px;}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;z-index:999;background:rgba(6,15,30,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--cb);padding:20px 28px;flex-direction:column;gap:2px;}
 .mobile-menu.open{display:flex;}
-.mobile-link{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);background:none;border:none;padding:12px 0;cursor:pointer;border-bottom:1px solid rgba(200,230,192,0.06);text-align:left;transition:color 0.2s;}
+.mobile-link{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);background:none;border:none;padding:13px 0;cursor:pointer;border-bottom:1px solid rgba(200,230,192,0.06);text-align:left;transition:color 0.2s;}
 .mobile-link:hover,.mobile-link.active{color:var(--mint);}
 
-/* ══ PAGES ══ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PAGE ENGINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .page{display:none;min-height:100vh;padding-top:72px;}
 .page.active{display:block;}
 
-/* ══ SHARED ══ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SHARED COMPONENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .sec-tag{font-family:'Space Mono',sans-serif;font-size:11px;letter-spacing:3px;color:var(--mint);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
 .sec-tag::before{content:'';display:block;width:28px;height:1px;background:var(--mint);}
 .sec-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(36px,5vw,62px);text-transform:uppercase;line-height:0.95;margin-bottom:20px;}
-.sec-body{font-size:16px;font-weight:300;color:var(--gray);line-height:1.8;max-width:580px;}
+.sec-body{font-size:var(--body-fs);font-weight:300;color:var(--gray);line-height:1.8;max-width:600px;}
 .accent-mint{color:var(--mint);}.accent-amber{color:var(--amber);}.accent-sky{color:var(--sky);}
-.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--mint);color:var(--navy);padding:14px 32px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));transition:background 0.2s,transform 0.2s;}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--mint);color:var(--navy);padding:14px 32px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));transition:background 0.2s,transform 0.2s;}
 .btn-primary:hover{background:var(--mint-dark);transform:translateY(-2px);}
-.btn-ghost{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(200,230,192,0.25);color:var(--mint);padding:14px 32px;background:transparent;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all 0.2s;}
+.btn-ghost{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(200,230,192,0.25);color:var(--mint);padding:14px 32px;background:transparent;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all 0.2s;}
 .btn-ghost:hover{border-color:var(--mint);background:rgba(200,230,192,0.06);}
+.btn-amber{background:var(--amber);color:var(--navy);}
+.btn-amber:hover{background:var(--amber-dark);}
 
-/* ══ HERO ══ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   WHATSAPP FLOATING BUTTON
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.wa-float{
+  position:fixed;bottom:28px;left:28px;z-index:998;
+  display:flex;align-items:center;gap:0;
+  cursor:pointer;text-decoration:none;
+}
+.wa-bubble{
+  width:58px;height:58px;border-radius:50%;
+  background:#25D366;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,0.4);
+  transition:transform 0.3s var(--tr),box-shadow 0.3s;
+  flex-shrink:0;
+}
+.wa-float:hover .wa-bubble{transform:scale(1.12);box-shadow:0 6px 28px rgba(37,211,102,0.55);}
+.wa-label{
+  background:#25D366;color:#fff;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;
+  padding:10px 18px 10px 14px;
+  clip-path:polygon(12px 0,100% 0,100% 100%,0 100%,0 50%);
+  white-space:nowrap;
+  max-width:0;overflow:hidden;
+  transition:max-width 0.4s var(--tr),opacity 0.3s;
+  opacity:0;
+}
+.wa-float:hover .wa-label{max-width:260px;opacity:1;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOME — HERO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:80px 56px 60px;position:relative;overflow:hidden;gap:48px;}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 50%,rgba(200,230,192,0.04) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 80% 20%,rgba(245,166,35,0.03) 0%,transparent 60%),linear-gradient(180deg,var(--navy-deep) 0%,var(--navy-mid) 100%);}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,230,192,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(200,230,192,0.03) 1px,transparent 1px);background-size:72px 72px;}
 .hero-vl{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(200,230,192,0.12),transparent);}
 .hero-vl.l1{right:34%;}.hero-vl.l2{right:33.6%;opacity:0.4;}
 .hero-left{position:relative;z-index:2;}
-
-/* Eyebrow - CIFER full name */
-.hero-eyebrow-name{
-  font-family:'Barlow Condensed',sans-serif;font-weight:700;
-  font-size:clamp(13px,1.4vw,17px);letter-spacing:1.5px;
-  color:rgba(200,230,192,0.75);text-transform:uppercase;
-  margin-bottom:14px;line-height:1.4;
-}
+.hero-eyebrow-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(15px,1.6vw,19px);letter-spacing:1.5px;color:rgba(200,230,192,0.7);text-transform:uppercase;margin-bottom:16px;line-height:1.5;}
 .hero-eyebrow-name span{color:var(--mint);font-weight:800;}
-
 .hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(60px,8vw,108px);text-transform:uppercase;line-height:0.88;margin-bottom:28px;}
 .hero-title .l1{display:block;color:var(--white);}
 .hero-title .l2{display:block;color:var(--mint);}
 .hero-title .l3{display:block;color:var(--amber);}
-.hero-sub{font-size:17px;font-weight:300;color:var(--gray);line-height:1.75;max-width:460px;margin-bottom:40px;}
+.hero-sub{font-size:var(--body-fs);font-weight:300;color:var(--gray);line-height:1.75;max-width:460px;margin-bottom:40px;}
 .hero-sub strong{color:var(--mint-light);font-weight:500;}
 .hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
 .hero-right{position:relative;z-index:2;display:flex;flex-direction:column;gap:16px;}
-.stat-pill{display:flex;align-items:center;gap:18px;padding:20px 24px;background:rgba(255,255,255,0.03);border:1px solid var(--card-border);backdrop-filter:blur(8px);transition:border-color 0.3s,background 0.3s;animation:fadeSlide 0.6s var(--tr) backwards;}
+.stat-pill{display:flex;align-items:center;gap:18px;padding:20px 24px;background:rgba(255,255,255,0.03);border:1px solid var(--cb);backdrop-filter:blur(8px);transition:border-color 0.3s,background 0.3s;animation:fadeSlide 0.6s var(--tr) backwards;}
 .stat-pill:hover{border-color:rgba(200,230,192,0.28);background:rgba(200,230,192,0.04);}
 .stat-pill:nth-child(1){animation-delay:0.1s;}.stat-pill:nth-child(2){animation-delay:0.2s;margin-left:24px;}.stat-pill:nth-child(3){animation-delay:0.3s;}.stat-pill:nth-child(4){animation-delay:0.4s;margin-left:24px;}
 @keyframes fadeSlide{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
 .stat-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;line-height:1;color:var(--mint);min-width:80px;}
-.stat-info-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--white);margin-bottom:3px;}
-.stat-info-sub{font-size:12px;color:var(--gray);}
+.stat-info-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;text-transform:uppercase;color:var(--white);margin-bottom:3px;}
+.stat-info-sub{font-size:var(--body-xs);color:var(--gray);}
 
-/* ══ PULLER TICKER ══ */
-.puller-strip{background:var(--navy-mid);border-top:1px solid var(--card-border);border-bottom:1px solid var(--card-border);overflow:hidden;height:64px;display:flex;align-items:center;position:relative;}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PULLER TICKER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.puller-strip{background:var(--navy-mid);border-top:1px solid var(--cb);border-bottom:1px solid var(--cb);overflow:hidden;height:66px;display:flex;align-items:center;position:relative;}
 .puller-strip::before,.puller-strip::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;}
 .puller-strip::before{left:0;background:linear-gradient(90deg,var(--navy-mid),transparent);}
 .puller-strip::after{right:0;background:linear-gradient(270deg,var(--navy-mid),transparent);}
-.puller-track{display:flex;align-items:center;white-space:nowrap;animation:ticker 65s linear infinite;gap:0;}
+.puller-track{display:flex;align-items:center;white-space:nowrap;animation:ticker 70s linear infinite;gap:0;}
 .puller-track:hover{animation-play-state:paused;}
 @keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.puller-item{display:inline-flex;align-items:center;gap:14px;padding:0 40px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:19px;letter-spacing:0.5px;color:var(--gray);cursor:pointer;transition:color 0.2s;flex-shrink:0;border-right:1px solid var(--card-border);}
+.puller-item{display:inline-flex;align-items:center;gap:14px;padding:0 40px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:20px;letter-spacing:0.5px;color:var(--gray);cursor:pointer;transition:color 0.2s;flex-shrink:0;border-right:1px solid var(--cb);}
 .puller-item:hover{color:var(--white);}
-.puller-item .pi-icon{font-size:20px;flex-shrink:0;}
-.puller-item .pi-text em{color:var(--mint);font-style:normal;font-weight:700;}
-.puller-item .pi-cta{font-family:'Space Mono',sans-serif;font-size:10px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-left:6px;white-space:nowrap;}
+.pi-icon{font-size:20px;flex-shrink:0;}
+.pi-text em{color:var(--mint);font-style:normal;font-weight:700;}
+.pi-cta{font-family:'Space Mono',sans-serif;font-size:10px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-left:6px;white-space:nowrap;}
 
-/* ══ DIVISIONS PREVIEW ══ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SECTORS MARQUEE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.sectors-marquee{padding:44px 0;overflow:hidden;background:var(--navy-deep);border-top:1px solid var(--cb);border-bottom:1px solid var(--cb);}
+.sectors-track{display:flex;gap:0;animation:marquee-slow 30s linear infinite;}
+.sector-tag-item{display:inline-flex;align-items:center;gap:10px;padding:0 28px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:2px;color:rgba(122,155,173,0.4);border-right:1px solid rgba(200,230,192,0.06);flex-shrink:0;white-space:nowrap;}
+.sector-tag-item.hi{color:var(--mint-dark);}
+@keyframes marquee-slow{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DIVISIONS PREVIEW (HOME)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .divisions-preview{padding:80px 56px;background:var(--navy-mid);}
 .div-preview-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:20px;}
 .div-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(200,230,192,0.05);}
@@ -110,66 +165,78 @@ body{font-family:'Barlow',sans-serif;background:var(--navy-deep);color:var(--whi
 .div-card.studio:hover{border-bottom-color:var(--mint);}
 .div-card.lab:hover{border-bottom-color:var(--amber);}
 .div-card.sol:hover{border-bottom-color:var(--sky);}
-.div-num{font-family:'Space Mono',sans-serif;font-size:10px;letter-spacing:3px;margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+.div-num{font-family:'Space Mono',sans-serif;font-size:11px;letter-spacing:3px;margin-bottom:24px;display:flex;align-items:center;gap:10px;}
 .div-card.studio .div-num{color:var(--mint);}.div-card.lab .div-num{color:var(--amber);}.div-card.sol .div-num{color:var(--sky);}
 .div-num::after{content:'';flex:1;height:1px;}
 .div-card.studio .div-num::after{background:rgba(200,230,192,0.12);}.div-card.lab .div-num::after{background:rgba(245,166,35,0.12);}.div-card.sol .div-num::after{background:rgba(91,200,240,0.12);}
 .div-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:30px;text-transform:uppercase;color:var(--white);margin-bottom:6px;}
-.div-motto{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;}
+.div-motto{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;}
 .div-card.studio .div-motto{color:var(--mint);}.div-card.lab .div-motto{color:var(--amber);}.div-card.sol .div-motto{color:var(--sky);}
-.div-desc{font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:28px;}
-.div-link{font-family:'Space Mono',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;background:none;border:none;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:8px;transition:gap 0.2s;}
+.div-desc{font-size:var(--body-sm);color:var(--gray);line-height:1.7;margin-bottom:28px;}
+.div-link{font-family:'Space Mono',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;background:none;border:none;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:8px;transition:gap 0.2s;}
 .div-card.studio .div-link{color:var(--mint);}.div-card.lab .div-link{color:var(--amber);}.div-card.sol .div-link{color:var(--sky);}
 .div-link:hover{gap:14px;}
 
-/* ── PIPELINE FLOW ── */
-.pipeline-section{padding:64px 56px;background:var(--navy-deep);border-top:1px solid var(--card-border);}
-.pipeline-label{font-family:'Space Mono',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-align:center;margin-bottom:28px;}
-.pipeline-track{display:flex;align-items:center;flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;gap:0;-ms-overflow-style:none;scrollbar-width:none;}
-.pipeline-track::-webkit-scrollbar{display:none;}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PIPELINE — CENTRE ALIGNED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.pipeline-section{padding:80px 56px;background:var(--navy-deep);border-top:1px solid var(--cb);}
+.pipeline-track{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  gap:24px 0;
+  margin:40px auto 0;
+  max-width:1000px;
+}
 .pipeline-node{
-  flex-shrink:0;display:flex;flex-direction:column;align-items:center;
-  position:relative;min-width:108px;
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;min-width:100px;flex:0 0 auto;
 }
-.pipeline-node::after{
-  content:'→';position:absolute;right:-14px;top:22px;
-  font-size:18px;color:rgba(200,230,192,0.25);z-index:1;
+/* arrow between nodes — skip on last */
+.pipeline-node:not(:last-child)::after{
+  content:'→';
+  position:absolute;
+  right:-16px;top:14px;
+  font-size:20px;color:rgba(200,230,192,0.22);
   font-family:'Space Mono',sans-serif;
+  pointer-events:none;
 }
-.pipeline-node:last-child::after{display:none;}
 .pn-circle{
-  width:52px;height:52px;border-radius:0;
+  width:54px;height:54px;
   display:flex;align-items:center;justify-content:center;
-  font-size:22px;margin-bottom:10px;
-  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
-  background:rgba(200,230,192,0.06);border:none;
-  transition:transform 0.2s;
+  font-size:24px;margin-bottom:12px;
+  border-radius:50%;
+  transition:transform 0.25s,box-shadow 0.25s;
   position:relative;z-index:2;
 }
-.pipeline-node:hover .pn-circle{transform:scale(1.12);}
-.pipeline-node.s1 .pn-circle{background:rgba(200,230,192,0.10);}
-.pipeline-node.s2 .pn-circle{background:rgba(245,166,35,0.12);}
-.pipeline-node.s3 .pn-circle{background:rgba(91,200,240,0.10);}
-.pn-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--white);text-align:center;line-height:1.3;}
-.pn-sub{font-size:10px;color:var(--gray);text-align:center;margin-top:3px;}
-.pipeline-cifer-badge{
-  margin-top:24px;text-align:center;
-  font-family:'Space Mono',sans-serif;font-size:10px;letter-spacing:2px;
-  color:var(--amber);text-transform:uppercase;
-}
-.pipeline-cifer-badge span{
-  display:inline-block;padding:6px 20px;border:1px solid rgba(245,166,35,0.3);
-  background:rgba(245,166,35,0.05);
-}
+.pipeline-node:hover .pn-circle{transform:scale(1.15);box-shadow:0 0 20px rgba(200,230,192,0.2);}
+.pipeline-node.s1 .pn-circle{background:rgba(200,230,192,0.10);border:1px solid rgba(200,230,192,0.2);}
+.pipeline-node.s2 .pn-circle{background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.25);}
+.pipeline-node.s3 .pn-circle{background:rgba(91,200,240,0.10);border:1px solid rgba(91,200,240,0.22);}
+.pn-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--white);text-align:center;line-height:1.3;}
+.pn-sub{font-size:12px;color:var(--gray);text-align:center;margin-top:3px;}
+.pipeline-cifer-badge{margin-top:32px;text-align:center;font-family:'Space Mono',sans-serif;font-size:11px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;}
+.pipeline-cifer-badge span{display:inline-block;padding:8px 24px;border:1px solid rgba(245,166,35,0.3);background:rgba(245,166,35,0.05);}
 
-/* ══ SECTORS MARQUEE ══ */
-.sectors-marquee{padding:44px 0;overflow:hidden;background:var(--navy-mid);border-top:1px solid var(--card-border);border-bottom:1px solid var(--card-border);}
-.sectors-track{display:flex;gap:0;animation:marquee-slow 28s linear infinite;}
-.sector-tag-item{display:inline-flex;align-items:center;gap:10px;padding:0 28px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:2px;color:rgba(122,155,173,0.4);border-right:1px solid rgba(200,230,192,0.06);flex-shrink:0;white-space:nowrap;}
-.sector-tag-item.hi{color:var(--mint-dark);}
-@keyframes marquee-slow{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FOCUS SECTORS (HOME bottom expand)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.sectors-section{padding:80px 56px;background:var(--navy-mid);}
+.sectors-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:48px;}
+.sector-card{padding:32px 24px;border:1px solid var(--cb);background:rgba(200,230,192,0.02);text-align:center;transition:border-color 0.3s,transform 0.3s;}
+.sector-card:hover{border-color:var(--mint);transform:translateY(-5px);}
+.sector-card.hidden-sector{display:none;}
+.sector-icon{font-size:36px;margin-bottom:14px;}
+.sector-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:1.5px;color:var(--white);margin-bottom:8px;}
+.sector-desc{font-size:var(--body-xs);color:var(--gray);line-height:1.6;}
+.see-more-btn{display:flex;align-items:center;justify-content:center;gap:10px;margin:28px auto 0;background:none;border:1px solid rgba(200,230,192,0.2);color:var(--mint);padding:12px 28px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
+.see-more-btn:hover{border-color:var(--mint);background:rgba(200,230,192,0.06);}
 
-/* ══ TRL STRIP ══ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TRL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .home-trl{padding:80px 56px;background:var(--navy-deep);text-align:center;}
 .trl-bar{display:flex;gap:3px;margin:48px 0 20px;max-width:900px;margin-left:auto;margin-right:auto;}
 .trl-seg{flex:1;height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;position:relative;cursor:default;transition:transform 0.2s;}
@@ -179,188 +246,303 @@ body{font-family:'Barlow',sans-serif;background:var(--navy-deep);color:var(--whi
 .trl-seg.cifer{background:var(--amber);color:var(--navy);}
 .trl-label{position:absolute;bottom:-26px;font-family:'Space Mono',sans-serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);white-space:nowrap;}
 .trl-legend{display:flex;justify-content:center;gap:32px;margin-top:44px;flex-wrap:wrap;}
-.trl-leg-i{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--gray);}
+.trl-leg-i{display:flex;align-items:center;gap:8px;font-size:var(--body-sm);color:var(--gray);}
 .trl-dot{width:12px;height:12px;}
 .trl-dot.dim{background:rgba(255,255,255,0.03);border:1px solid rgba(200,230,192,0.08);}
 .trl-dot.go{background:rgba(200,230,192,0.12);border:1px solid rgba(200,230,192,0.2);}
 .trl-dot.cifer{background:var(--amber);}
 
-/* ══ SERVICES PAGE - TABBED ══ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SERVICES PAGE — TABBED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .services-hero{padding:80px 56px 0;background:linear-gradient(135deg,var(--navy-mid) 0%,var(--navy-deep) 60%);position:relative;overflow:hidden;}
 .services-hero-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(200,230,192,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(200,230,192,0.025) 1px,transparent 1px);background-size:56px 56px;}
-.srv-tab-bar{position:relative;z-index:2;display:flex;gap:0;margin-top:48px;border-bottom:2px solid var(--card-border);}
-.srv-tab{
-  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:2px;text-transform:uppercase;
-  background:none;border:none;cursor:pointer;padding:18px 40px;color:var(--gray);
-  position:relative;transition:color 0.2s;border-bottom:3px solid transparent;margin-bottom:-2px;
-}
+.srv-tab-bar{position:relative;z-index:2;display:flex;gap:0;margin-top:48px;border-bottom:2px solid var(--cb);}
+.srv-tab{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:19px;letter-spacing:2px;text-transform:uppercase;background:none;border:none;cursor:pointer;padding:18px 40px;color:var(--gray);position:relative;transition:color 0.2s;border-bottom:3px solid transparent;margin-bottom:-2px;}
 .srv-tab:hover{color:var(--white);}
 .srv-tab.active-studio{color:var(--mint);border-bottom-color:var(--mint);}
 .srv-tab.active-lab{color:var(--amber);border-bottom-color:var(--amber);}
 .srv-tab.active-sol{color:var(--sky);border-bottom-color:var(--sky);}
 .srv-panel{display:none;padding:64px 56px;background:var(--navy-mid);}
 .srv-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
-.srv-panel-left{}
 .srv-big-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(44px,6vw,80px);text-transform:uppercase;line-height:0.9;margin-bottom:8px;}
-.srv-big-motto{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:4px;text-transform:uppercase;margin-bottom:24px;}
-.srv-desc-long{font-size:15px;color:var(--gray);line-height:1.8;margin-bottom:32px;}
-.srv-list-full{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px;}
-.srv-list-full li{font-size:14px;color:rgba(244,249,244,0.78);line-height:1.55;display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border:1px solid var(--card-border);background:rgba(200,230,192,0.02);transition:border-color 0.2s;}
+.srv-big-motto{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:4px;text-transform:uppercase;margin-bottom:24px;}
+.srv-desc-long{font-size:var(--body-fs);color:var(--gray);line-height:1.8;margin-bottom:32px;}
+.srv-list-full{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:36px;}
+.srv-list-full li{font-size:var(--body-sm);color:rgba(244,249,244,0.8);line-height:1.55;display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border:1px solid var(--cb);background:rgba(200,230,192,0.02);transition:border-color 0.2s;}
 .srv-list-full li:hover{border-color:rgba(200,230,192,0.22);}
-.srv-list-full li::before{flex-shrink:0;margin-top:1px;font-family:'Space Mono',sans-serif;font-size:11px;}
+.srv-list-full li::before{flex-shrink:0;margin-top:2px;font-family:'Space Mono',sans-serif;font-size:11px;}
 .srv-p1 .srv-list-full li::before{content:'→';color:var(--mint);}
 .srv-p2 .srv-list-full li::before{content:'→';color:var(--amber);}
 .srv-p3 .srv-list-full li::before{content:'→';color:var(--sky);}
 
-/* ══ TEAM PAGE ══ */
-.team-hero-banner{padding:80px 56px 60px;background:linear-gradient(160deg,var(--navy-mid),var(--navy-deep));border-bottom:1px solid var(--card-border);}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TEAM PAGE — WITH PHOTO SLOTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.team-hero-banner{padding:80px 56px 60px;background:linear-gradient(160deg,var(--navy-mid),var(--navy-deep));border-bottom:1px solid var(--cb);}
 .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(200,230,192,0.04);}
-.team-card{background:var(--navy-mid);padding:36px 28px;transition:background 0.3s;}
+.team-card{background:var(--navy-mid);overflow:hidden;transition:background 0.3s;}
 .team-card:hover{background:var(--navy-light);}
-.team-avatar{width:60px;height:60px;background:rgba(200,230,192,0.08);border:2px solid rgba(200,230,192,0.18);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--mint);margin-bottom:18px;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
-.team-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:17px;text-transform:uppercase;letter-spacing:0.5px;color:var(--white);margin-bottom:5px;}
-.team-role{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
-.team-bio{font-size:13px;color:var(--gray);line-height:1.65;}
+
+/* Photo area */
+.team-photo{
+  width:100%;aspect-ratio:1/1;
+  position:relative;overflow:hidden;
+  background:rgba(200,230,192,0.05);
+}
+.team-photo img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.4s var(--tr);
+  display:block;
+}
+.team-photo .photo-placeholder{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(135deg,var(--navy-light),var(--navy-mid));
+  border-bottom:1px solid var(--cb);
+  cursor:pointer;
+  transition:background 0.3s;
+}
+.team-photo .photo-placeholder:hover{background:var(--navy-light);}
+.photo-initials{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:42px;color:var(--mint);}
+.photo-placeholder-label{font-family:'Space Mono',sans-serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
+.team-card:hover .team-photo img{transform:scale(1.05);}
+.team-photo-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,rgba(6,15,30,0.7) 100%);
+  pointer-events:none;
+}
+
+.team-info{padding:24px 24px 28px;}
+.team-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;text-transform:uppercase;letter-spacing:0.5px;color:var(--white);margin-bottom:4px;}
+.team-role{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:12px;}
+.team-bio{font-size:var(--body-xs);color:var(--gray);line-height:1.65;}
+
 .stats-band{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(200,230,192,0.05);margin:2px 0;}
 .stat-band-item{background:var(--navy-mid);padding:32px;text-align:center;}
 .sbi-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:52px;line-height:1;}
-.sbi-label{font-size:13px;color:var(--gray);margin-top:6px;letter-spacing:1px;text-transform:uppercase;}
+.sbi-label{font-size:var(--body-sm);color:var(--gray);margin-top:6px;letter-spacing:1px;text-transform:uppercase;}
+
 .mentors-section{padding:80px 56px;background:var(--navy-deep);}
 .mentor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
-.mentor-card{padding:28px 24px;border:1px solid var(--card-border);background:rgba(200,230,192,0.02);transition:border-color 0.3s,background 0.3s;}
+.mentor-card{padding:28px 24px;border:1px solid var(--cb);background:rgba(200,230,192,0.02);transition:border-color 0.3s,background 0.3s;}
 .mentor-card:hover{border-color:rgba(200,230,192,0.22);background:rgba(200,230,192,0.04);}
-.mentor-domain{font-family:'Space Mono',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mint);margin-bottom:12px;}
-.mentor-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;text-transform:uppercase;color:var(--white);margin-bottom:5px;}
-.mentor-org{font-size:12px;color:var(--gray);line-height:1.5;}
+.mentor-domain{font-family:'Space Mono',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mint);margin-bottom:12px;}
+.mentor-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;text-transform:uppercase;color:var(--white);margin-bottom:5px;}
+.mentor-org{font-size:var(--body-sm);color:var(--gray);line-height:1.55;}
 
-/* ══ ABOUT PAGE ══ */
-.about-hero{padding:96px 56px 80px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;background:var(--navy-mid);border-bottom:1px solid var(--card-border);position:relative;overflow:hidden;}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ABOUT PAGE — SUCCESS STORIES ON TOP + PHOTOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.about-success-top{padding:80px 56px;background:var(--navy-mid);border-bottom:1px solid var(--cb);}
+.success-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
+.success-card{border:1px solid var(--cb);background:rgba(245,166,35,0.02);overflow:hidden;transition:border-color 0.3s,transform 0.3s;position:relative;}
+.success-card:hover{border-color:rgba(245,166,35,0.3);transform:translateY(-4px);}
+.success-card-top-bar{height:3px;background:var(--amber);}
+
+/* Story photo slot */
+.success-photo{
+  width:100%;height:180px;
+  position:relative;overflow:hidden;
+  background:rgba(200,230,192,0.04);
+  cursor:pointer;
+}
+.success-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s var(--tr);}
+.success-card:hover .success-photo img{transform:scale(1.05);}
+.success-photo .sph-placeholder{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  background:linear-gradient(135deg,var(--navy-light),var(--navy-mid));
+  border-bottom:1px solid var(--cb);
+}
+.sph-icon{font-size:32px;}
+.sph-label{font-family:'Space Mono',sans-serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
+.upload-hint{font-size:11px;color:rgba(122,155,173,0.5);margin-top:4px;}
+
+.success-body{padding:24px 24px 28px;}
+.success-tag{font-family:'Space Mono',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:10px;}
+.success-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;text-transform:uppercase;color:var(--white);margin-bottom:10px;}
+.success-desc{font-size:var(--body-sm);color:var(--gray);line-height:1.65;}
+.success-badge{display:inline-block;margin-top:12px;padding:5px 12px;background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.25);font-family:'Space Mono',sans-serif;font-size:9px;color:var(--amber);letter-spacing:1.5px;text-transform:uppercase;}
+.pipeline-flag{display:inline-flex;align-items:center;gap:8px;margin-top:8px;padding:5px 12px;background:rgba(91,200,240,0.08);border:1px solid rgba(91,200,240,0.2);font-size:var(--body-xs);color:var(--sky);}
+
+/* pipeline story spans full width */
+.success-pipeline{grid-column:1/-1;}
+
+.about-hero{padding:80px 56px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;background:var(--navy-deep);border-bottom:1px solid var(--cb);position:relative;overflow:hidden;}
 .vision-block{border-left:3px solid var(--mint);padding:20px 24px;background:rgba(200,230,192,0.04);margin-bottom:24px;}
 .vision-lbl{font-family:'Space Mono',sans-serif;font-size:9px;letter-spacing:3px;color:var(--mint);text-transform:uppercase;margin-bottom:8px;}
-.vision-txt{font-size:15px;color:rgba(244,249,244,0.82);line-height:1.75;font-style:italic;}
+.vision-txt{font-size:var(--body-sm);color:rgba(244,249,244,0.82);line-height:1.75;font-style:italic;}
 .mission-items{list-style:none;display:flex;flex-direction:column;gap:14px;}
-.mission-item{display:flex;gap:16px;align-items:flex-start;padding:16px 18px;border:1px solid var(--card-border);background:rgba(200,230,192,0.02);transition:all 0.3s;}
+.mission-item{display:flex;gap:16px;align-items:flex-start;padding:16px 18px;border:1px solid var(--cb);background:rgba(200,230,192,0.02);transition:all 0.3s;}
 .mission-item:hover{border-color:rgba(200,230,192,0.22);background:rgba(200,230,192,0.05);}
 .mi-num{font-family:'Space Mono',sans-serif;font-size:11px;color:var(--amber);font-weight:700;min-width:28px;padding-top:1px;}
-.mi-txt{font-size:14px;color:var(--gray);line-height:1.65;}
+.mi-txt{font-size:var(--body-sm);color:var(--gray);line-height:1.65;}
 .mi-txt strong{color:var(--white);font-weight:500;}
-.about-values{padding:80px 56px;background:var(--navy-deep);}
+.about-values{padding:80px 56px;background:var(--navy-mid);}
 .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
-.val-card{padding:36px 28px;border:1px solid var(--card-border);transition:border-color 0.3s,transform 0.3s;}
+.val-card{padding:36px 28px;border:1px solid var(--cb);transition:border-color 0.3s,transform 0.3s;}
 .val-card:hover{border-color:rgba(200,230,192,0.25);transform:translateY(-4px);}
-.val-icon{font-size:32px;margin-bottom:16px;}
-.val-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:20px;text-transform:uppercase;color:var(--white);margin-bottom:10px;}
-.val-desc{font-size:13px;color:var(--gray);line-height:1.7;}
-
-/* Success Stories */
-.success-section{padding:80px 56px;background:var(--navy-mid);border-top:1px solid var(--card-border);}
-.success-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
-.success-card{padding:32px 28px;border:1px solid var(--card-border);background:rgba(245,166,35,0.03);position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s;}
-.success-card:hover{border-color:rgba(245,166,35,0.3);transform:translateY(-4px);}
-.success-card-accent{position:absolute;top:0;left:0;right:0;height:3px;background:var(--amber);}
-.success-tag{font-family:'Space Mono',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:12px;}
-.success-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;text-transform:uppercase;color:var(--white);margin-bottom:10px;}
-.success-desc{font-size:13px;color:var(--gray);line-height:1.65;}
-.success-badge{display:inline-block;margin-top:12px;padding:5px 12px;background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.25);font-family:'Space Mono',sans-serif;font-size:9px;color:var(--amber);letter-spacing:1.5px;text-transform:uppercase;}
-.pipeline-flag{display:inline-flex;align-items:center;gap:8px;margin-top:8px;padding:5px 12px;background:rgba(91,200,240,0.08);border:1px solid rgba(91,200,240,0.2);font-size:11px;color:var(--sky);}
-
-/* Legal (moved from home to about) */
-.about-legal{padding:56px;background:var(--navy-deep);border-top:1px solid var(--card-border);}
+.val-icon{font-size:34px;margin-bottom:16px;}
+.val-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:21px;text-transform:uppercase;color:var(--white);margin-bottom:10px;}
+.val-desc{font-size:var(--body-sm);color:var(--gray);line-height:1.7;}
+.about-legal{padding:56px;background:var(--navy-deep);border-top:1px solid var(--cb);}
 .legal-pills{display:flex;gap:16px;flex-wrap:wrap;margin-top:28px;}
-.legal-pill{display:flex;align-items:center;gap:12px;padding:16px 24px;border:1px solid var(--card-border);background:rgba(200,230,192,0.03);}
+.legal-pill{display:flex;align-items:center;gap:12px;padding:16px 24px;border:1px solid var(--cb);background:rgba(200,230,192,0.03);}
 .lp-icon{font-size:20px;}
-.lp-lbl{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mint);}
-.lp-val{font-size:12px;color:var(--gray);}
+.lp-lbl{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mint);}
+.lp-val{font-size:var(--body-xs);color:var(--gray);}
 
-/* ══ PARTNERS PAGE ══ */
-.partners-intro{padding:80px 56px 64px;background:var(--navy-mid);border-bottom:1px solid var(--card-border);display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PARTNERS PAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.partners-intro{padding:80px 56px 64px;background:var(--navy-mid);border-bottom:1px solid var(--cb);display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
 .partners-section{padding:64px 56px;background:var(--navy-deep);}
-.partner-category-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--mint);margin-bottom:28px;display:flex;align-items:center;gap:12px;}
-.partner-category-title::after{content:'';flex:1;height:1px;background:var(--card-border);}
+.partner-category-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--mint);margin-bottom:28px;display:flex;align-items:center;gap:12px;}
+.partner-category-title::after{content:'';flex:1;height:1px;background:var(--cb);}
 .partners-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:48px;}
-.partner-card{padding:28px 20px;border:1px solid var(--card-border);text-align:center;background:rgba(200,230,192,0.02);transition:all 0.3s;}
+.partner-card{padding:28px 20px;border:1px solid var(--cb);text-align:center;background:rgba(200,230,192,0.02);transition:all 0.3s;}
 .partner-card:hover{border-color:rgba(200,230,192,0.22);background:rgba(200,230,192,0.05);transform:translateY(-3px);}
 .partner-icon{font-size:28px;margin-bottom:10px;}
-.partner-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--white);margin-bottom:6px;}
-.partner-type{font-size:11px;color:var(--gray);letter-spacing:1px;text-transform:uppercase;}
+.partner-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:1px;color:var(--white);margin-bottom:6px;}
+.partner-type{font-size:var(--body-xs);color:var(--gray);letter-spacing:1px;text-transform:uppercase;}
 .clients-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.client-card{padding:24px 20px;border:1px solid var(--card-border);background:rgba(245,166,35,0.02);transition:all 0.3s;}
+.client-card{padding:24px 20px;border:1px solid var(--cb);background:rgba(245,166,35,0.02);transition:all 0.3s;}
 .client-card:hover{border-color:rgba(245,166,35,0.25);background:rgba(245,166,35,0.05);}
 .client-seg{font-family:'Space Mono',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
-.client-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;text-transform:uppercase;color:var(--white);margin-bottom:6px;}
-.client-desc{font-size:12px;color:var(--gray);line-height:1.6;}
+.client-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;text-transform:uppercase;color:var(--white);margin-bottom:6px;}
+.client-desc{font-size:var(--body-xs);color:var(--gray);line-height:1.6;}
 
-/* ══ CONTACT PAGE ══ */
-.contact-hero{padding:80px 56px 0;background:var(--navy-mid);display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;border-bottom:1px solid var(--card-border);}
-.contact-form-wrap{padding:48px;background:var(--navy-deep);border:1px solid var(--card-border);clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));margin-bottom:56px;}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CONTACT PAGE + WEB3FORMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.contact-hero{padding:80px 56px 0;background:var(--navy-mid);display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;border-bottom:1px solid var(--cb);}
+.contact-form-wrap{padding:48px;background:var(--navy-deep);border:1px solid var(--cb);clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));margin-bottom:56px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 .form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
-.form-label{font-family:'Space Mono',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mint);}
-.form-input,.form-select,.form-textarea{background:rgba(200,230,192,0.04);border:1px solid var(--card-border);padding:12px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s,background 0.2s;width:100%;}
+.form-label{font-family:'Space Mono',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mint);}
+.form-input,.form-select,.form-textarea{background:rgba(200,230,192,0.04);border:1px solid var(--cb);padding:13px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:var(--body-sm);outline:none;transition:border-color 0.2s,background 0.2s;width:100%;}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:rgba(200,230,192,0.35);background:rgba(200,230,192,0.07);}
-.form-input::placeholder,.form-textarea::placeholder{color:var(--gray);font-size:13px;}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--gray);font-size:var(--body-xs);}
 .form-select option{background:var(--navy-mid);}
-.form-textarea{resize:vertical;min-height:100px;}
-.contact-info-item{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--card-border);}
-.cii-icon{width:44px;height:44px;background:rgba(200,230,192,0.08);border:1px solid var(--card-border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.form-textarea{resize:vertical;min-height:110px;}
+/* Honeypot field — hidden spam trap */
+.form-hp{display:none !important;}
+/* Success / Error states */
+.form-status{margin-top:12px;padding:14px 18px;font-family:'Barlow Condensed',sans-serif;font-size:16px;letter-spacing:1px;display:none;}
+.form-status.success{background:rgba(200,230,192,0.08);border:1px solid rgba(200,230,192,0.25);color:var(--mint);}
+.form-status.error{background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.25);color:var(--amber);}
+
+.contact-info-item{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--cb);}
+.cii-icon{width:44px;height:44px;background:rgba(200,230,192,0.08);border:1px solid var(--cb);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .cii-label{font-family:'Space Mono',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mint);margin-bottom:5px;}
-.cii-val{font-size:14px;color:var(--white);line-height:1.6;}
-.gmail-login-section{padding:64px 56px;background:var(--navy-deep);text-align:center;border-top:1px solid var(--card-border);}
-.gmail-card{max-width:560px;margin:0 auto;background:var(--navy-mid);border:1px solid var(--card-border);padding:48px;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));position:relative;}
+.cii-val{font-size:var(--body-sm);color:var(--white);line-height:1.6;}
+.social-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1px solid var(--cb);background:rgba(200,230,192,0.03);color:var(--gray);font-size:var(--body-xs);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:1px;transition:all 0.2s;margin-right:8px;margin-top:8px;}
+.social-btn:hover{border-color:rgba(200,230,192,0.25);color:var(--mint);}
+
+.gmail-login-section{padding:64px 56px;background:var(--navy-deep);text-align:center;border-top:1px solid var(--cb);}
+.gmail-card{max-width:560px;margin:0 auto;background:var(--navy-mid);border:1px solid var(--cb);padding:48px;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));position:relative;}
 .gmail-card-badge{position:absolute;top:-1px;left:28px;background:var(--mint);color:var(--navy);padding:3px 14px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:2px;text-transform:uppercase;}
 .srv-select-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0;}
-.ssb{padding:14px 8px;border:1px solid var(--card-border);background:rgba(200,230,192,0.02);color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
+.ssb{padding:14px 8px;border:1px solid var(--cb);background:rgba(200,230,192,0.02);color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
 .ssb.sel-mint{background:rgba(200,230,192,0.08);border-color:var(--mint);color:var(--mint);}
 .ssb.sel-amber{background:rgba(245,166,35,0.08);border-color:var(--amber);color:var(--amber);}
 .ssb.sel-sky{background:rgba(91,200,240,0.08);border-color:var(--sky);color:var(--sky);}
-.gmail-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 28px;background:var(--white);color:var(--navy-deep);border:none;cursor:pointer;font-family:'Barlow',sans-serif;font-weight:600;font-size:15px;transition:background 0.2s,transform 0.2s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
+.gmail-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;padding:17px 28px;background:var(--white);color:var(--navy-deep);border:none;cursor:pointer;font-family:'Barlow',sans-serif;font-weight:600;font-size:var(--body-sm);transition:background 0.2s,transform 0.2s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
 .gmail-btn:hover{background:var(--mint-light);transform:translateY(-2px);}
-.form-note{font-size:11px;color:rgba(122,155,173,0.6);margin-top:10px;}
+.form-note{font-size:var(--body-xs);color:rgba(122,155,173,0.6);margin-top:10px;}
 
-/* ══ FOOTER ══ */
-footer{background:var(--navy-deep);border-top:1px solid var(--card-border);padding:56px 56px 32px;}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FOOTER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+footer{background:var(--navy-deep);border-top:1px solid var(--cb);padding:56px 56px 32px;}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px;}
-.footer-brand-text{font-size:13px;color:var(--gray);line-height:1.75;margin-top:14px;max-width:260px;}
-.footer-col-head{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--mint);margin-bottom:18px;}
+.footer-brand-text{font-size:var(--body-sm);color:var(--gray);line-height:1.75;margin-top:14px;max-width:260px;}
+.footer-col-head{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--mint);margin-bottom:18px;}
 .footer-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.footer-list button,.footer-list a{font-size:13px;color:var(--gray);background:none;border:none;cursor:pointer;text-decoration:none;text-align:left;transition:color 0.2s;padding:0;font-family:'Barlow',sans-serif;}
+.footer-list button,.footer-list a{font-size:var(--body-sm);color:var(--gray);background:none;border:none;cursor:pointer;text-decoration:none;text-align:left;transition:color 0.2s;padding:0;font-family:'Barlow',sans-serif;}
 .footer-list button:hover,.footer-list a:hover{color:var(--white);}
-.footer-social{display:flex;gap:12px;margin-top:16px;}
-.social-btn{display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--card-border);background:rgba(200,230,192,0.03);color:var(--gray);font-size:12px;text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:1px;transition:all 0.2s;}
-.social-btn:hover{border-color:rgba(200,230,192,0.25);color:var(--mint);}
-.footer-bottom{border-top:1px solid var(--card-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-social{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+.footer-bottom{border-top:1px solid var(--cb);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .footer-copy{font-family:'Space Mono',sans-serif;font-size:11px;color:rgba(122,155,173,0.45);}
 .footer-sdg{display:flex;gap:6px;align-items:center;font-family:'Space Mono',sans-serif;font-size:9px;color:rgba(122,155,173,0.4);letter-spacing:1px;}
 .sdg-c{width:8px;height:8px;border-radius:50%;}
 
-/* ══ TOAST ══ */
-.toast{position:fixed;bottom:28px;right:28px;z-index:9999;background:var(--navy-light);border:1px solid var(--mint);padding:16px 24px;display:flex;align-items:center;gap:12px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:15px;letter-spacing:1px;color:var(--white);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));opacity:0;transform:translateY(20px);transition:all 0.4s var(--tr);pointer-events:none;}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOAST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.toast{position:fixed;bottom:28px;right:28px;z-index:9999;background:var(--navy-light);border:1px solid var(--mint);padding:16px 24px;display:flex;align-items:center;gap:12px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;letter-spacing:1px;color:var(--white);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));opacity:0;transform:translateY(20px);transition:all 0.4s var(--tr);pointer-events:none;max-width:360px;}
 .toast.show{opacity:1;transform:translateY(0);}
-.toast-dot{width:8px;height:8px;background:var(--mint);border-radius:50%;}
+.toast-dot{width:8px;height:8px;background:var(--mint);border-radius:50%;flex-shrink:0;}
 
-/* ══ RESPONSIVE ══ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESPONSIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 @media(max-width:960px){
   .hero{grid-template-columns:1fr;padding:60px 24px 48px;}.hero-right{display:none;}
   .about-hero,.partners-intro,.contact-hero{grid-template-columns:1fr;gap:32px;}
-  .team-grid{grid-template-columns:1fr 1fr;}.mentor-grid,.values-grid,.success-grid{grid-template-columns:1fr;}
+  .team-grid{grid-template-columns:1fr 1fr;}
+  .mentor-grid,.values-grid,.success-grid{grid-template-columns:1fr;}
   .div-grid,.partners-grid,.clients-grid{grid-template-columns:1fr 1fr;}
   .footer-grid{grid-template-columns:1fr 1fr;gap:28px;}
   .form-row{grid-template-columns:1fr;}.srv-select-grid{grid-template-columns:1fr;}
   .stats-band{grid-template-columns:1fr;}
+  .sectors-grid{grid-template-columns:1fr 1fr;}
   nav{padding:0 20px;}.nav-links{display:none;}.nav-burger{display:flex;}
-  .section,.divisions-preview,.mentors-section,.about-values,.about-legal,.success-section,.partners-section,.partners-intro,.contact-hero,.gmail-login-section,.team-hero-banner,.home-trl,.pipeline-section{padding-left:24px;padding-right:24px;}
   .srv-panel.active{grid-template-columns:1fr;}
-  .srv-tab{padding:14px 20px;font-size:15px;}
-  .services-hero{padding:56px 24px 0;}
+  .srv-tab{padding:12px 16px;font-size:16px;}
+  .services-hero,.divisions-preview,.pipeline-section,.sectors-section,.home-trl,
+  .about-success-top,.about-hero,.about-values,.about-legal,
+  .partners-intro,.partners-section,.contact-hero,.gmail-login-section,
+  .team-hero-banner,.mentors-section,footer{padding-left:24px;padding-right:24px;}
+  .pipeline-node{min-width:80px;}
+  .pipeline-track{gap:16px 0;}
+  .success-grid{grid-template-columns:1fr;}
+  .success-pipeline{grid-column:1;}
 }
 </style>
 </head>
 <body>
 
-<!-- ══ NAV ══ -->
+<!-- ═══════════════════════════════════════════
+  WHATSAPP FLOATING BUTTON
+═══════════════════════════════════════════ -->
+<a class="wa-float" href="https://wa.me/918489503083?text=Hello%20CIFER%20Team%2C%20I%20would%20like%20to%20enquire%20about%20your%20services." target="_blank" title="Chat on WhatsApp">
+  <div class="wa-bubble">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </div>
+  <div class="wa-label">Chat with CIFER on WhatsApp</div>
+</a>
+
+<!-- ═══════════════════════════════════════════
+  NAV
+═══════════════════════════════════════════ -->
 <nav id="nav">
   <button class="nav-brand" onclick="navigate('home')">
-    <img src="images/logo.png" alt="CIFER Logo" class="nav-logo-img" id="navLogoImg">
+    <div class="nav-logo-wrap">
+      <!-- 
+        ┌──────────────────────────────────────────┐
+        │  LOGO IMAGE — HOW TO ADD YOUR LOGO:      │
+        │  1. Upload your logo to imgbb.com (free) │
+        │  2. Copy the "Direct link" URL           │
+        │  3. Replace the src below with that URL  │
+        └──────────────────────────────────────────┘
+      -->
+      <img src="YOUR_LOGO_URL_HERE" alt="CIFER Logo"
+        onerror="this.style.display='none'"
+        id="navLogoImg" style="display:none">
+      <!-- SVG Fallback logo — mirrors your brand mark -->
+      <div class="nav-logo-svg" id="navLogoFallback">
+        <svg viewBox="0 0 110 28" height="28" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="23" font-family="'Barlow Condensed',sans-serif" font-weight="900" font-size="26" fill="#0B1E3D" letter-spacing="2">CIFER</text>
+        </svg>
+      </div>
+    </div>
+    <div class="nav-tagline-wrap">
+      <div class="nav-tagline">Design · Develop · Disrupt</div>
+    </div>
   </button>
   <div class="nav-links">
     <button class="nav-link active" data-page="home" onclick="navigate('home')">Home</button>
@@ -383,14 +565,16 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
   <button class="mobile-link" data-page="contact" onclick="navigate('contact');toggleMobile()">Contact Us</button>
 </div>
 
-<!-- ══════════════ HOME ══════════════ -->
+<!-- ═══════════════════════════════════════════
+  PAGE: HOME
+═══════════════════════════════════════════ -->
 <div id="page-home" class="page active">
 
+  <!-- HERO -->
   <div class="hero">
     <div class="hero-bg"></div><div class="hero-grid"></div>
     <div class="hero-vl l1"></div><div class="hero-vl l2"></div>
     <div class="hero-left">
-      <!-- #3: Full name above tagline, no registered badge -->
       <div class="hero-eyebrow-name">
         Centre for <span>Innovation</span> Fabrication <span>Engineering</span> &amp; Research &nbsp;(<span>C.I.F.E.R.</span>)
       </div>
@@ -409,14 +593,14 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
       <div class="stat-pill"><div class="stat-num">25+</div><div><div class="stat-info-label">Active Interns</div><div class="stat-info-sub">Intern-driven R&amp;D and innovation</div></div></div>
       <div class="stat-pill"><div class="stat-num" style="color:var(--amber)">10+</div><div><div class="stat-info-label">Expert Mentors</div><div class="stat-info-sub">Industry &amp; academic combined</div></div></div>
       <div class="stat-pill"><div class="stat-num" style="color:var(--sky)">TRL 1→9</div><div><div class="stat-info-label">Full Pipeline</div><div class="stat-info-sub">Concept to commercial deployment</div></div></div>
-      <div class="stat-pill"><div class="stat-num" style="color:var(--mint-dark)">6</div><div><div class="stat-info-label">Focus Sectors</div><div class="stat-info-sub">Agriculture · Drones · MedTech · and more</div></div></div>
+      <div class="stat-pill"><div class="stat-num" style="color:var(--mint-dark)">7</div><div><div class="stat-info-label">Focus Sectors</div><div class="stat-info-sub">Agriculture · Drones · MedTech · and more</div></div></div>
     </div>
   </div>
 
-  <!-- PULLER TICKER — bigger font, slower -->
+  <!-- PULLER TICKER -->
   <div class="puller-strip"><div class="puller-track" id="pullerTrack"></div></div>
 
-  <!-- SECTORS MARQUEE — updated sectors -->
+  <!-- SECTORS MARQUEE -->
   <div class="sectors-marquee"><div class="sectors-track" id="sectorsTrack"></div></div>
 
   <!-- DIVISIONS PREVIEW -->
@@ -453,26 +637,47 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
     </div>
   </div>
 
-  <!-- PIPELINE FLOW -->
+  <!-- PIPELINE — CENTRED -->
   <div class="pipeline-section">
     <div class="sec-tag" style="justify-content:center">Idea to Impact</div>
     <h2 class="sec-title" style="text-align:center;margin-bottom:8px">Our Innovation <span class="accent-mint">Pipeline</span></h2>
-    <p style="text-align:center;font-size:14px;color:var(--gray);max-width:640px;margin:0 auto 40px;line-height:1.7;">We support you from anywhere in the pipeline to wherever you need to go. You don't have to start at Step 1.</p>
+    <p style="text-align:center;font-size:var(--body-sm);color:var(--gray);max-width:640px;margin:0 auto 0;line-height:1.75;">We support you from anywhere in the pipeline to wherever you need to go. You don't have to start at Step 1.</p>
     <div class="pipeline-track">
-      <div class="pipeline-node s1"><div class="pn-circle">🔍</div><div class="pn-label">Pain Point / PS</div><div class="pn-sub">Identification</div></div>
+      <div class="pipeline-node s1"><div class="pn-circle">🔍</div><div class="pn-label">Pain Point</div><div class="pn-sub">PS Identification</div></div>
       <div class="pipeline-node s1"><div class="pn-circle">💡</div><div class="pn-label">Solution</div><div class="pn-sub">Ideation</div></div>
       <div class="pipeline-node s1"><div class="pn-circle">✨</div><div class="pn-label">Innovation</div><div class="pn-sub">Framing</div></div>
       <div class="pipeline-node s2"><div class="pn-circle">🎨</div><div class="pn-label">Design</div><div class="pn-sub">Thinking</div></div>
-      <div class="pipeline-node s2"><div class="pn-circle">📐</div><div class="pn-label">Product</div><div class="pn-sub">Design & CAD</div></div>
+      <div class="pipeline-node s2"><div class="pn-circle">📐</div><div class="pn-label">Product</div><div class="pn-sub">Design &amp; CAD</div></div>
       <div class="pipeline-node s2"><div class="pn-circle">⚙️</div><div class="pn-label">Prototype</div><div class="pn-sub">Fabrication</div></div>
-      <div class="pipeline-node s2"><div class="pn-circle">🧪</div><div class="pn-label">MVP</div><div class="pn-sub">Test & Validate</div></div>
-      <div class="pipeline-node s3"><div class="pn-circle">📊</div><div class="pn-label">Market</div><div class="pn-sub">Strategy & IP</div></div>
-      <div class="pipeline-node s3"><div class="pn-circle">🚀</div><div class="pn-label">Launch</div><div class="pn-sub">Scale & Transfer</div></div>
+      <div class="pipeline-node s2"><div class="pn-circle">🧪</div><div class="pn-label">MVP</div><div class="pn-sub">Test &amp; Validate</div></div>
+      <div class="pipeline-node s3"><div class="pn-circle">📊</div><div class="pn-label">Market</div><div class="pn-sub">Strategy &amp; IP</div></div>
+      <div class="pipeline-node s3"><div class="pn-circle">🚀</div><div class="pn-label">Launch</div><div class="pn-sub">Scale &amp; Transfer</div></div>
     </div>
     <div class="pipeline-cifer-badge"><span>CIFER supports you from anywhere → to any end, as needed</span></div>
   </div>
 
-  <!-- TRL BAR -->
+  <!-- FOCUS SECTORS — 4 visible + "show more" -->
+  <div class="sectors-section">
+    <div class="sec-tag">Focus Areas</div>
+    <h2 class="sec-title">Our Focus <span class="accent-amber">Sectors</span></h2>
+    <p class="sec-body">Seven high-impact domains where engineering and innovation can address pressing societal challenges.</p>
+    <div class="sectors-grid" id="sectorsGrid">
+      <div class="sector-card"><div class="sector-icon">🌾</div><div class="sector-name">Agriculture &amp; Rural Innovation</div><div class="sector-desc">Smart farming, precision agriculture, low-cost automation for smallholder farmers, post-harvest tech.</div></div>
+      <div class="sector-card"><div class="sector-icon">🚁</div><div class="sector-name">Drones &amp; Robotics</div><div class="sector-desc">Agricultural drones, autonomous systems, surveillance UAVs, payload design and robotic integration.</div></div>
+      <div class="sector-card"><div class="sector-icon">⚛️</div><div class="sector-name">Quantum Technology</div><div class="sector-desc">Quantum sensing, computing interfaces, and quantum-enhanced materials for next-gen engineering applications.</div></div>
+      <div class="sector-card"><div class="sector-icon">🌊</div><div class="sector-name">Blue &amp; Circular Economy</div><div class="sector-desc">Marine tech, aquaculture automation, ocean data systems, and circular resource management solutions.</div></div>
+      <!-- hidden sectors shown on "more" -->
+      <div class="sector-card hidden-sector"><div class="sector-icon">🏭</div><div class="sector-name">Green Manufacturing</div><div class="sector-desc">Sustainable fabrication, waste reduction, circular economy tools, and energy-efficient process design.</div></div>
+      <div class="sector-card hidden-sector"><div class="sector-icon">🏥</div><div class="sector-name">Med Techs</div><div class="sector-desc">Medical device prototyping, assistive technology, diagnostic tools, and low-cost healthcare innovation.</div></div>
+      <div class="sector-card hidden-sector"><div class="sector-icon">🖨️</div><div class="sector-name">3D Printing &amp; Fabrication</div><div class="sector-desc">Additive manufacturing for rapid prototyping, custom parts, FDM/SLA/SLS across all materials and domains.</div></div>
+    </div>
+    <button class="see-more-btn" id="seeMoreBtn" onclick="toggleSectors()">
+      <span id="seeMoreTxt">Show More Sectors</span>
+      <span id="seeMoreArrow">↓</span>
+    </button>
+  </div>
+
+  <!-- TRL -->
   <div class="home-trl">
     <div class="sec-tag" style="justify-content:center">Innovation Pipeline</div>
     <h2 class="sec-title">Bridging the <span class="accent-mint">TRL Gap</span></h2>
@@ -497,148 +702,194 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
 </div><!-- /home -->
 
 
-<!-- ══════════════ SERVICES ══════════════ -->
+<!-- ═══════════════════════════════════════════
+  PAGE: SERVICES
+═══════════════════════════════════════════ -->
 <div id="page-services" class="page">
   <div class="services-hero">
     <div class="services-hero-bg"></div>
     <div style="position:relative;z-index:2;padding-bottom:0">
       <div class="sec-tag">Our Divisions</div>
       <h1 class="sec-title">Three Ways<br>We <span class="accent-mint">Deliver</span></h1>
-      <p class="sec-body">Select a division below to explore what we offer and get started.</p>
+      <p class="sec-body">Select a division to explore what we offer and get started.</p>
     </div>
-    <!-- TABS -->
     <div class="srv-tab-bar">
       <button class="srv-tab active-studio" id="tab-studio" onclick="switchTab('studio')">CIFER Studio</button>
       <button class="srv-tab" id="tab-lab" onclick="switchTab('lab')">CIFER Lab</button>
       <button class="srv-tab" id="tab-sol" onclick="switchTab('sol')">CIFER Solutions</button>
     </div>
   </div>
-
-  <!-- STUDIO PANEL -->
   <div class="srv-panel active srv-p1" id="panel-studio">
-    <div class="srv-panel-left">
-      <div style="font-family:'Space Mono',sans-serif;font-size:10px;letter-spacing:3px;color:var(--mint);text-transform:uppercase;margin-bottom:14px;">Division 01</div>
+    <div>
+      <div style="font-family:'Space Mono',sans-serif;font-size:11px;letter-spacing:3px;color:var(--mint);text-transform:uppercase;margin-bottom:14px;">Division 01</div>
       <div class="srv-big-name" style="color:var(--mint)">CIFER<br>Studio</div>
       <div class="srv-big-motto" style="color:var(--mint)">We Design</div>
-      <p class="srv-desc-long">Expert design consulting that transforms ideas into precision-engineered concepts. From competition vehicles to investor-ready pitch decks — we make your vision presentable, testable, and fundable. CIFER Studio is where innovation gets its first real form.</p>
+      <p class="srv-desc-long">Expert design consulting that transforms ideas into precision-engineered concepts. From competition vehicles to investor-ready pitch decks — we make your vision presentable, testable, and fundable.</p>
       <button class="btn-primary" onclick="navigate('contact')">Get Started with Studio <svg width="14" height="12" fill="none" viewBox="0 0 14 12"><path d="M1 6h12M7 1l6 5-6 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
     </div>
-    <div>
-      <ul class="srv-list-full">
-        <li>CAD Modelling &amp; 3D Design (SolidWorks, CATIA, Fusion 360)</li>
-        <li>FEA / Structural Analysis &amp; Design Optimization</li>
-        <li>CFD &amp; Thermal / Aerodynamic Simulations</li>
-        <li>Competition Design — SAE Baja, Formula Student, Go-Kart</li>
-        <li>Product Prototyping Concepts &amp; Stress Testing</li>
-        <li>Pitch Deck Preparation &amp; Investor Presentation Design</li>
-        <li>Technical Reports, Patent Drawings &amp; Documentation</li>
-        <li>Visual Branding &amp; UI/UX Design for Startups</li>
-        <li>Design Consultancy for Early-Stage Founders</li>
-      </ul>
-    </div>
+    <ul class="srv-list-full">
+      <li>CAD Modelling &amp; 3D Design (SolidWorks, CATIA, Fusion 360)</li>
+      <li>FEA / Structural Analysis &amp; Design Optimization</li>
+      <li>CFD &amp; Thermal / Aerodynamic Simulations</li>
+      <li>Competition Design — SAE Baja, Formula Student, Go-Kart</li>
+      <li>Product Prototyping Concepts &amp; Stress Testing</li>
+      <li>Pitch Deck Preparation &amp; Investor Presentation Design</li>
+      <li>Technical Reports, Patent Drawings &amp; Documentation</li>
+      <li>Visual Branding &amp; UI/UX Design for Startups</li>
+      <li>Design Consultancy for Early-Stage Founders</li>
+    </ul>
   </div>
-
-  <!-- LAB PANEL -->
   <div class="srv-panel srv-p2" id="panel-lab">
-    <div class="srv-panel-left">
-      <div style="font-family:'Space Mono',sans-serif;font-size:10px;letter-spacing:3px;color:var(--amber);text-transform:uppercase;margin-bottom:14px;">Division 02</div>
+    <div>
+      <div style="font-family:'Space Mono',sans-serif;font-size:11px;letter-spacing:3px;color:var(--amber);text-transform:uppercase;margin-bottom:14px;">Division 02</div>
       <div class="srv-big-name" style="color:var(--amber)">CIFER<br>Lab</div>
       <div class="srv-big-motto" style="color:var(--amber)">We Develop</div>
-      <p class="srv-desc-long">Full-stack prototyping and fabrication. We turn your design into a tangible, functional product — built, tested, and ready for demonstration, investment, or deployment. From raw materials to a working prototype in record time.</p>
+      <p class="srv-desc-long">Full-stack prototyping and fabrication. We turn your design into a tangible, functional product — built, tested, and ready for demonstration, investment, or deployment.</p>
       <button class="btn-primary btn-amber" onclick="navigate('contact')">Get Started with Lab <svg width="14" height="12" fill="none" viewBox="0 0 14 12"><path d="M1 6h12M7 1l6 5-6 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
     </div>
-    <div>
-      <ul class="srv-list-full">
-        <li>CNC Machining, Welding &amp; Metal Fabrication</li>
-        <li>3D Printing — FDM, SLA, SLS across all materials</li>
-        <li>Laser Cutting, Sheet Metal &amp; Composite Work</li>
-        <li>IoT Integration &amp; Embedded Systems Development</li>
-        <li>Machine Learning &amp; AI Module Integration</li>
-        <li>Hackathon, Competition &amp; Student Project Builds</li>
-        <li>Startup MVP Fabrication &amp; Rapid Iteration</li>
-        <li>Intern-Driven R&amp;D Projects &amp; Patent Filings</li>
-        <li>Laboratory Testing, Validation &amp; Quality Assurance</li>
-      </ul>
-    </div>
+    <ul class="srv-list-full">
+      <li>CNC Machining, Welding &amp; Metal Fabrication</li>
+      <li>3D Printing — FDM, SLA, SLS across all materials</li>
+      <li>Laser Cutting, Sheet Metal &amp; Composite Work</li>
+      <li>IoT Integration &amp; Embedded Systems Development</li>
+      <li>Machine Learning &amp; AI Module Integration</li>
+      <li>Hackathon, Competition &amp; Student Project Builds</li>
+      <li>Startup MVP Fabrication &amp; Rapid Iteration</li>
+      <li>Intern-Driven R&amp;D Projects &amp; Patent Filings</li>
+      <li>Laboratory Testing, Validation &amp; Quality Assurance</li>
+    </ul>
   </div>
-
-  <!-- SOLUTIONS PANEL -->
   <div class="srv-panel srv-p3" id="panel-sol">
-    <div class="srv-panel-left">
-      <div style="font-family:'Space Mono',sans-serif;font-size:10px;letter-spacing:3px;color:var(--sky);text-transform:uppercase;margin-bottom:14px;">Division 03</div>
+    <div>
+      <div style="font-family:'Space Mono',sans-serif;font-size:11px;letter-spacing:3px;color:var(--sky);text-transform:uppercase;margin-bottom:14px;">Division 03</div>
       <div class="srv-big-name" style="color:var(--sky)">CIFER<br>Solutions</div>
       <div class="srv-big-motto" style="color:var(--sky)">We Disrupt</div>
-      <p class="srv-desc-long">SDG-aligned deep tech for real-world impact. We go beyond building — connecting innovations to markets, funding, policy, and the ecosystem needed to scale. Whether you need to protect your IP, find investors, or transfer technology, CIFER Solutions is your partner.</p>
+      <p class="srv-desc-long">SDG-aligned deep tech for real-world impact. We connect innovations to markets, funding, policy, and the ecosystem needed to scale. IP filing, investor connects, government grants — we navigate it all.</p>
       <button class="btn-primary" style="background:var(--sky)" onclick="navigate('contact')">Get Started with Solutions <svg width="14" height="12" fill="none" viewBox="0 0 14 12"><path d="M1 6h12M7 1l6 5-6 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
     </div>
-    <div>
-      <ul class="srv-list-full">
-        <li>SDG-Driven Innovation Projects &amp; Scoping</li>
-        <li>Smart Farming Tools &amp; Low-Cost Agricultural Automation</li>
-        <li>Drone Design for Agriculture, Blue Economy &amp; Surveillance</li>
-        <li>Technology Transfer &amp; IP Commercialisation</li>
-        <li>Fund Generation — Government Grants (MSME, iTNT, TANSEED), VCs, Angels</li>
-        <li>Investor Connect &amp; Pitch Coaching</li>
-        <li>Institutional Mentoring Forum for Faculty &amp; Students</li>
-        <li>MoU Facilitation &amp; Industry Collaboration</li>
-        <li>Intellectual Property (IPR) Filing, Strategy &amp; NIPAM Navigation</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Process -->
-  <div style="padding:72px 56px;background:var(--navy-deep);">
-    <div class="sec-tag">How It Works</div>
-    <h2 class="sec-title" style="margin-bottom:52px">From Idea to <span class="accent-mint">Impact</span></h2>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:rgba(200,230,192,0.04);">
-      <div style="padding:32px 20px;background:var(--navy-mid);text-align:center;"><div style="font-family:'Space Mono',sans-serif;font-size:9px;color:var(--mint);letter-spacing:2px;margin-bottom:10px;">STEP 01</div><div style="font-size:26px;margin-bottom:8px;">💡</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;color:var(--white);">Idea Brief</div><div style="font-size:12px;color:var(--gray);margin-top:6px;line-height:1.6;">You share your concept or challenge</div></div>
-      <div style="padding:32px 20px;background:var(--navy-mid);text-align:center;"><div style="font-family:'Space Mono',sans-serif;font-size:9px;color:var(--mint);letter-spacing:2px;margin-bottom:10px;">STEP 02</div><div style="font-size:26px;margin-bottom:8px;">🎯</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;color:var(--white);">Scope &amp; Plan</div><div style="font-size:12px;color:var(--gray);margin-top:6px;line-height:1.6;">Deliverables, timeline, cost defined</div></div>
-      <div style="padding:32px 20px;background:var(--navy-mid);text-align:center;"><div style="font-family:'Space Mono',sans-serif;font-size:9px;color:var(--amber);letter-spacing:2px;margin-bottom:10px;">STEP 03</div><div style="font-size:26px;margin-bottom:8px;">⚙️</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;color:var(--white);">Design &amp; Build</div><div style="font-size:12px;color:var(--gray);margin-top:6px;line-height:1.6;">Studio or Lab team executes</div></div>
-      <div style="padding:32px 20px;background:var(--navy-mid);text-align:center;"><div style="font-family:'Space Mono',sans-serif;font-size:9px;color:var(--amber);letter-spacing:2px;margin-bottom:10px;">STEP 04</div><div style="font-size:26px;margin-bottom:8px;">🔬</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;color:var(--white);">Test &amp; Validate</div><div style="font-size:12px;color:var(--gray);margin-top:6px;line-height:1.6;">Prototype tested &amp; documented</div></div>
-      <div style="padding:32px 20px;background:var(--navy-mid);text-align:center;"><div style="font-family:'Space Mono',sans-serif;font-size:9px;color:var(--sky);letter-spacing:2px;margin-bottom:10px;">STEP 05</div><div style="font-size:26px;margin-bottom:8px;">🚀</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;color:var(--white);">Deploy &amp; Scale</div><div style="font-size:12px;color:var(--gray);margin-top:6px;line-height:1.6;">Solutions connects to market &amp; IP</div></div>
-    </div>
+    <ul class="srv-list-full">
+      <li>SDG-Driven Innovation Projects &amp; Scoping</li>
+      <li>Smart Farming Tools &amp; Low-Cost Agricultural Automation</li>
+      <li>Drone Design for Agriculture, Blue Economy &amp; Surveillance</li>
+      <li>Technology Transfer &amp; IP Commercialisation</li>
+      <li>Fund Generation — MSME, iTNT, TANSEED, VCs, Angels</li>
+      <li>Investor Connect &amp; Pitch Coaching</li>
+      <li>Institutional Mentoring Forum for Faculty &amp; Students</li>
+      <li>MoU Facilitation &amp; Industry Collaboration</li>
+      <li>IPR Filing, Strategy &amp; NIPAM Navigation</li>
+    </ul>
   </div>
 </div><!-- /services -->
 
 
-<!-- ══════════════ TEAM ══════════════ -->
+<!-- ═══════════════════════════════════════════
+  PAGE: TEAM
+═══════════════════════════════════════════ -->
 <div id="page-team" class="page">
   <div class="team-hero-banner">
     <div class="sec-tag">The Organization</div>
     <h1 class="sec-title">The Minds<br>Behind <span class="accent-mint">CIFER</span></h1>
-    <p class="sec-body">A faculty-student co-founder model — institutional expertise fused with entrepreneurial drive, backed by a deep bench of industry mentors.</p>
+    <p class="sec-body">A faculty-student co-founder model — institutional expertise fused with entrepreneurial drive.</p>
   </div>
   <div class="stats-band">
     <div class="stat-band-item"><div class="sbi-num" style="color:var(--mint)">4</div><div class="sbi-label">Co-Founders</div></div>
     <div class="stat-band-item"><div class="sbi-num" style="color:var(--amber)">10+</div><div class="sbi-label">Expert Mentors</div></div>
     <div class="stat-band-item"><div class="sbi-num" style="color:var(--sky)">25+</div><div class="sbi-label">Active Interns</div></div>
   </div>
+
+  <!-- 
+  ╔══════════════════════════════════════════════════════╗
+  ║  HOW TO ADD FOUNDER PHOTOS:                          ║
+  ║  1. Upload each photo to imgbb.com (free)            ║
+  ║  2. Copy the "Direct link" URL for each person       ║
+  ║  3. Replace data-photo="PHOTO_URL_HERE" below        ║
+  ║     with the actual URL for each founder             ║
+  ║  4. The page will auto-load the image                ║
+  ╚══════════════════════════════════════════════════════╝
+  -->
   <div style="background:rgba(200,230,192,0.04)">
     <div class="team-grid">
+
+      <!-- DR. AMJ -->
       <div class="team-card">
-        <div class="team-avatar">AMJ</div>
-        <div class="team-name">Dr. A. Maria Jackson</div>
-        <div class="team-role">Head of Strategy &amp; Vision</div>
-        <p class="team-bio">Co-founder. Faculty, Mechanical Engineering. Leads CIFER's strategy, brand vision, IP policy, Manufacturing &amp; SCM, AI &amp; Computer Vision, and business incubation. The driving force behind CIFER's TRL mission.</p>
+        <div class="team-photo">
+          <img src="" alt="Dr. A. Maria Jackson" id="photo-amj"
+            data-photo="PHOTO_URL_HERE_AMJ"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="photo-placeholder">
+            <div class="photo-initials" style="color:var(--mint)">AMJ</div>
+            <div class="photo-placeholder-label">Add Photo</div>
+            <div class="upload-hint">Replace PHOTO_URL_HERE_AMJ</div>
+          </div>
+          <div class="team-photo-overlay"></div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Dr. A. Maria Jackson</div>
+          <div class="team-role">Head of Strategy &amp; Vision</div>
+          <p class="team-bio">Co-founder. Faculty, Mechanical Engineering. Leads CIFER's strategy, IP policy, AI &amp; Computer Vision, Manufacturing &amp; SCM, and business incubation.</p>
+        </div>
       </div>
+
+      <!-- DR. UMAR -->
       <div class="team-card">
-        <div class="team-avatar" style="color:var(--amber);border-color:rgba(245,166,35,0.25)">MU</div>
-        <div class="team-name">Dr. M. Umar</div>
-        <div class="team-role">Head of Finance &amp; Business Dev</div>
-        <p class="team-bio">Co-founder. Faculty, Mechanical Engineering. Drives financial strategy, business development, institutional partnerships, and compliance for CIFER's growing project portfolio.</p>
+        <div class="team-photo">
+          <img src="" alt="Dr. M. Umar" id="photo-umar"
+            data-photo="PHOTO_URL_HERE_UMAR"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="photo-placeholder">
+            <div class="photo-initials" style="color:var(--amber)">MU</div>
+            <div class="photo-placeholder-label">Add Photo</div>
+            <div class="upload-hint">Replace PHOTO_URL_HERE_UMAR</div>
+          </div>
+          <div class="team-photo-overlay"></div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Dr. M. Umar</div>
+          <div class="team-role" style="color:var(--amber)">Head of Finance &amp; Business Dev</div>
+          <p class="team-bio">Co-founder. Faculty, Mechanical Engineering. Drives financial strategy, business development, institutional partnerships, and audit &amp; compliance.</p>
+        </div>
       </div>
+
+      <!-- SHAJU -->
       <div class="team-card">
-        <div class="team-avatar" style="color:var(--sky);border-color:rgba(91,200,240,0.25)">SPG</div>
-        <div class="team-name">Mr. Shaju P.G.</div>
-        <div class="team-role">Head of Engineering &amp; Innovation</div>
-        <p class="team-bio">Student co-founder. Leads all engineering execution — competition projects, prototype builds, CIFER Lab operations, and intern-driven R&amp;D initiatives.</p>
+        <div class="team-photo">
+          <img src="" alt="Mr. Shaju P.G." id="photo-shaju"
+            data-photo="PHOTO_URL_HERE_SHAJU"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="photo-placeholder">
+            <div class="photo-initials" style="color:var(--sky)">SPG</div>
+            <div class="photo-placeholder-label">Add Photo</div>
+            <div class="upload-hint">Replace PHOTO_URL_HERE_SHAJU</div>
+          </div>
+          <div class="team-photo-overlay"></div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Mr. Shaju P.G.</div>
+          <div class="team-role" style="color:var(--sky)">Head of Engineering &amp; Innovation</div>
+          <p class="team-bio">Student co-founder. Leads engineering execution — competition projects, prototype builds, CIFER Lab operations, and intern-driven R&amp;D.</p>
+        </div>
       </div>
+
+      <!-- JASUVANT -->
       <div class="team-card">
-        <div class="team-avatar" style="color:var(--mint-dark);border-color:rgba(139,196,138,0.25)">RSJ</div>
-        <div class="team-name">Mr. R.S. Jasuvant</div>
-        <div class="team-role">Head of Operations &amp; Implementation</div>
-        <p class="team-bio">Student co-founder. Manages operational delivery — project timelines, client coordination, CIFER Lab workflow, and intern onboarding. Keeps the machine running.</p>
+        <div class="team-photo">
+          <img src="" alt="Mr. R.S. Jasuvant" id="photo-jasuvant"
+            data-photo="PHOTO_URL_HERE_JASUVANT"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="photo-placeholder">
+            <div class="photo-initials" style="color:var(--mint-dark)">RSJ</div>
+            <div class="photo-placeholder-label">Add Photo</div>
+            <div class="upload-hint">Replace PHOTO_URL_HERE_JASUVANT</div>
+          </div>
+          <div class="team-photo-overlay"></div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Mr. R.S. Jasuvant</div>
+          <div class="team-role" style="color:var(--mint-dark)">Head of Operations &amp; Implementation</div>
+          <p class="team-bio">Student co-founder. Manages operational delivery — project timelines, client coordination, CIFER Lab workflow, and intern onboarding.</p>
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -647,50 +898,137 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
     <h2 class="sec-title">Expert <span class="accent-mint">Mentors</span></h2>
     <p class="sec-body">Seasoned professionals guiding CIFER across six critical domains.</p>
     <div class="mentor-grid">
-      <div class="mentor-card">
-        <div class="mentor-domain">New Product Development</div>
-        <div class="mentor-name">Mr. P. Jose Livingston</div>
-        <div class="mentor-org">Senior Product Design Engineer<br>Daimler Truck Innovation Center India, Bangalore</div>
-      </div>
-      <div class="mentor-card">
-        <div class="mentor-domain">Manufacturing &amp; SCM</div>
-        <div class="mentor-name">Mr. B. Felix</div>
-        <div class="mentor-org">Welding Inspection Engineer, CSWIP<br>Based in Qatar</div>
-      </div>
-      <div class="mentor-card">
-        <div class="mentor-domain">AI &amp; Computer Vision</div>
-        <div class="mentor-name">Ms. Veronica Mariadoss</div>
-        <div class="mentor-org">Senior Test Lead<br>HCLTech</div>
-      </div>
-      <div class="mentor-card">
-        <div class="mentor-domain">Business Incubation</div>
-        <div class="mentor-name">Mr. M. Vinoth Malaikani</div>
-        <div class="mentor-org">CEO, EDII ABIRF<br>Tiruchirappalli</div>
-      </div>
-      <div class="mentor-card">
-        <div class="mentor-domain">IPR &amp; Policies</div>
-        <div class="mentor-name">Mr. Moshe Dayan J E</div>
-        <div class="mentor-org">Government Certified Trainer for NIPAM<br>Intellectual Property Rights &amp; Policy</div>
-      </div>
-      <div class="mentor-card">
-        <div class="mentor-domain">Finance &amp; Auditing</div>
-        <div class="mentor-name">Domain Expert</div>
-        <div class="mentor-org">Financial auditing, fund structuring, government grants, and MSME compliance advisory.</div>
-      </div>
+      <div class="mentor-card"><div class="mentor-domain">New Product Development</div><div class="mentor-name">Mr. P. Jose Livingston</div><div class="mentor-org">Senior Product Design Engineer<br>Daimler Truck Innovation Center India, Bangalore</div></div>
+      <div class="mentor-card"><div class="mentor-domain">Manufacturing &amp; SCM</div><div class="mentor-name">Mr. B. Felix</div><div class="mentor-org">Welding Inspection Engineer, CSWIP<br>Based in Qatar</div></div>
+      <div class="mentor-card"><div class="mentor-domain">AI &amp; Computer Vision</div><div class="mentor-name">Ms. Veronica Mariadoss</div><div class="mentor-org">Senior Test Lead<br>HCLTech</div></div>
+      <div class="mentor-card"><div class="mentor-domain">Business Incubation</div><div class="mentor-name">Mr. M. Vinoth Malaikani</div><div class="mentor-org">CEO, EDII ABIRF<br>Tiruchirappalli</div></div>
+      <div class="mentor-card"><div class="mentor-domain">IPR &amp; Policies</div><div class="mentor-name">Mr. Moshe Dayan J E</div><div class="mentor-org">Government Certified Trainer for NIPAM<br>Intellectual Property Rights &amp; Policy</div></div>
+      <div class="mentor-card"><div class="mentor-domain">Finance &amp; Auditing</div><div class="mentor-name">Domain Expert</div><div class="mentor-org">Financial auditing, fund structuring, government grants, and MSME compliance advisory.</div></div>
     </div>
   </div>
 </div><!-- /team -->
 
 
-<!-- ══════════════ ABOUT ══════════════ -->
+<!-- ═══════════════════════════════════════════
+  PAGE: ABOUT — SUCCESS STORIES ON TOP
+═══════════════════════════════════════════ -->
 <div id="page-about" class="page">
+
+  <!-- SUCCESS STORIES — TOP OF PAGE -->
+  <div class="about-success-top">
+    <div class="sec-tag">Our Track Record</div>
+    <h1 class="sec-title">Success <span class="accent-amber">Stories</span></h1>
+    <p class="sec-body">Real outcomes — funded projects, delivered designs, and a growing pipeline of innovations that prove the CIFER model works.</p>
+
+    <!--
+    ╔══════════════════════════════════════════════════════╗
+    ║  HOW TO ADD SUCCESS STORY PHOTOS:                    ║
+    ║  1. Upload images to imgbb.com                       ║
+    ║  2. Copy "Direct link" URL                           ║
+    ║  3. Replace data-photo="SUCCESS_PHOTO_URL" below     ║
+    ╚══════════════════════════════════════════════════════╝
+    -->
+    <div class="success-grid">
+
+      <!-- STORY 1: AnarX -->
+      <div class="success-card">
+        <div class="success-card-top-bar"></div>
+        <div class="success-photo">
+          <img src="" alt="AnarX Project"
+            data-photo="SUCCESS_PHOTO_ANARX"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="sph-placeholder">
+            <div class="sph-icon">🏆</div>
+            <div class="sph-label">AnarX Photo</div>
+            <div class="upload-hint">Replace SUCCESS_PHOTO_ANARX</div>
+          </div>
+        </div>
+        <div class="success-body">
+          <div class="success-tag">Funded Innovation</div>
+          <div class="success-title">AnarX</div>
+          <p class="success-desc">Conceptualised, developed, and incubated at CIFER. AnarX received government recognition and was funded by MSME for Rs. 8.51 Lakhs — a testament to CIFER's ability to take research from idea to funded reality.</p>
+          <span class="success-badge">₹8.51 Lakhs — MSME Funded</span>
+        </div>
+      </div>
+
+      <!-- STORY 2: Bharat Cane -->
+      <div class="success-card">
+        <div class="success-card-top-bar"></div>
+        <div class="success-photo">
+          <img src="" alt="Bharat Cane Industries"
+            data-photo="SUCCESS_PHOTO_BHARATCANE"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="sph-placeholder">
+            <div class="sph-icon">⚙️</div>
+            <div class="sph-label">Project Photo</div>
+            <div class="upload-hint">Replace SUCCESS_PHOTO_BHARATCANE</div>
+          </div>
+        </div>
+        <div class="success-body">
+          <div class="success-tag">Industry Delivery</div>
+          <div class="success-title">Bharat Cane Industries</div>
+          <p class="success-desc">Completed and successfully delivered a full Design &amp; Fabrication project for Bharat Cane Industries — demonstrating CIFER Lab's end-to-end capability from engineering drawings to physical delivery.</p>
+          <span class="success-badge">Design &amp; Fabrication — Delivered</span>
+        </div>
+      </div>
+
+      <!-- STORY 3: Mentorships -->
+      <div class="success-card">
+        <div class="success-card-top-bar"></div>
+        <div class="success-photo">
+          <img src="" alt="Mentorship Programme"
+            data-photo="SUCCESS_PHOTO_MENTORSHIP"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="sph-placeholder">
+            <div class="sph-icon">🤝</div>
+            <div class="sph-label">Mentorship Photo</div>
+            <div class="upload-hint">Replace SUCCESS_PHOTO_MENTORSHIP</div>
+          </div>
+        </div>
+        <div class="success-body">
+          <div class="success-tag">Mentorship Impact</div>
+          <div class="success-title">20+ Mentorships</div>
+          <p class="success-desc">Onboarded 20+ mentorship engagements across student teams, researchers, and early-stage founders — all completed successfully. CIFER's institutional mentoring forum continues to grow.</p>
+          <span class="success-badge">20+ Engagements — Successfully Delivered</span>
+        </div>
+      </div>
+
+      <!-- STORY 4: Pipeline — full width -->
+      <div class="success-card success-pipeline">
+        <div class="success-card-top-bar" style="background:var(--sky)"></div>
+        <div class="success-photo" style="height:140px">
+          <img src="" alt="Funding Pipeline"
+            data-photo="SUCCESS_PHOTO_PIPELINE"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="sph-placeholder">
+            <div class="sph-icon">🔄</div>
+            <div class="sph-label">Pipeline Photo</div>
+            <div class="upload-hint">Replace SUCCESS_PHOTO_PIPELINE</div>
+          </div>
+        </div>
+        <div class="success-body">
+          <div class="success-tag" style="color:var(--sky)">In Pipeline</div>
+          <div class="success-title">3 Funding Projects in Active Pipeline</div>
+          <p class="success-desc">CIFER currently has three active funding and innovation projects progressing through evaluation and approval with key government and institutional bodies — more funded innovations incoming.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;">
+            <span class="pipeline-flag">🔄 MSME — In Pipeline</span>
+            <span class="pipeline-flag">🔄 iTNT Hub, Trichy — In Pipeline</span>
+            <span class="pipeline-flag">🔄 TANSEED — In Pipeline</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- VISION & MISSION -->
   <div class="about-hero">
-    <div style="position:absolute;right:0;top:0;bottom:0;width:50%;background:radial-gradient(ellipse at 80% 50%,rgba(200,230,192,0.03),transparent 70%);"></div>
+    <div style="position:absolute;right:0;top:0;bottom:0;width:50%;background:radial-gradient(ellipse at 80% 50%,rgba(200,230,192,0.03),transparent 70%);pointer-events:none;"></div>
     <div style="position:relative;z-index:2">
       <div class="sec-tag">Who We Are</div>
-      <h1 class="sec-title">Built to <span class="accent-mint">Bridge</span><br>the Gap</h1>
+      <h2 class="sec-title">Built to <span class="accent-mint">Bridge</span><br>the Gap</h2>
       <p class="sec-body" style="margin-bottom:24px">CIFER is a purpose-driven innovation firm established to bridge the gap between research and reality. We specialize in transforming inventive concepts into functional, high-impact solutions through design, prototyping, and engineering excellence.</p>
-      <p class="sec-body">With a strong foundation in technology development and rapid fabrication, CIFER focuses on critical domains. We believe every great idea deserves the chance to make a real-world impact — one design, one prototype, one solution at a time.</p>
+      <p class="sec-body">We believe every great idea deserves the chance to make a real-world impact — one design, one prototype, one solution at a time.</p>
     </div>
     <div style="position:relative;z-index:2">
       <div class="vision-block">
@@ -706,7 +1044,7 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
     </div>
   </div>
 
-  <!-- Values -->
+  <!-- VALUES -->
   <div class="about-values">
     <div class="sec-tag">What Drives Us</div>
     <h2 class="sec-title">Core <span class="accent-amber">Values</span></h2>
@@ -715,53 +1053,12 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
       <div class="val-card"><div class="val-icon">🌍</div><div class="val-title">SDG Alignment</div><p class="val-desc">Every innovation mapped to UN Sustainable Development Goals — ensuring our work serves a larger global purpose.</p></div>
       <div class="val-card"><div class="val-icon">🔬</div><div class="val-title">Responsible Engineering</div><p class="val-desc">We build with intention — safety, sustainability, and societal impact at every stage from prototype to product.</p></div>
       <div class="val-card"><div class="val-icon">🤝</div><div class="val-title">Purposeful Collaboration</div><p class="val-desc">Great innovations are built together — co-creating with industry, government, investors, and academia.</p></div>
-      <div class="val-card"><div class="val-icon">💡</div><div class="val-title">Student-Led Innovation</div><p class="val-desc">Students are co-creators, co-inventors, and co-founders of the solutions that will define tomorrow.</p></div>
-      <div class="val-card"><div class="val-icon">📈</div><div class="val-title">National Impact</div><p class="val-desc">We measure success by contributions to India's innovation indices — patents, tech transfers, and startups incubated.</p></div>
+      <div class="val-card"><div class="val-icon">💡</div><div class="val-title">Student-Led Innovation</div><p class="val-desc">Students are co-creators, co-inventors, and co-founders of the solutions that define tomorrow.</p></div>
+      <div class="val-card"><div class="val-icon">📈</div><div class="val-title">National Impact</div><p class="val-desc">We measure success by contributions to India's innovation indices — patents, tech transfers, startups incubated.</p></div>
     </div>
   </div>
 
-  <!-- SUCCESS STORIES -->
-  <div class="success-section">
-    <div class="sec-tag">Our Track Record</div>
-    <h2 class="sec-title">Success <span class="accent-amber">Stories</span></h2>
-    <p class="sec-body">Real outcomes — from funded projects to delivered designs and a growing pipeline of innovations.</p>
-    <div class="success-grid">
-      <div class="success-card">
-        <div class="success-card-accent"></div>
-        <div class="success-tag">Funded Innovation</div>
-        <div class="success-title">AnarX</div>
-        <p class="success-desc">Conceptualised, developed, and incubated at CIFER. AnarX received government recognition and was funded by MSME for Rs. 8.51 Lakhs — a testament to CIFER's ability to take research from idea to funded reality.</p>
-        <span class="success-badge">₹8.51 Lakhs — MSME Funded</span>
-      </div>
-      <div class="success-card">
-        <div class="success-card-accent"></div>
-        <div class="success-tag">Industry Delivery</div>
-        <div class="success-title">Bharat Cane Industries</div>
-        <p class="success-desc">Completed and successfully delivered a full Design &amp; Fabrication project for Bharat Cane Industries — demonstrating CIFER Lab's end-to-end capability from engineering drawings to physical delivery.</p>
-        <span class="success-badge">Design &amp; Fabrication — Delivered</span>
-      </div>
-      <div class="success-card">
-        <div class="success-card-accent"></div>
-        <div class="success-tag">Mentorship Impact</div>
-        <div class="success-title">20+ Mentorships</div>
-        <p class="success-desc">Onboarded 20+ mentorship engagements across student teams, researchers, and early-stage founders — all completed successfully. CIFER's institutional mentoring forum continues to grow in scale and depth.</p>
-        <span class="success-badge">20+ Mentorships — Successfully Delivered</span>
-      </div>
-      <div class="success-card" style="grid-column:1/-1">
-        <div class="success-card-accent" style="background:var(--sky)"></div>
-        <div class="success-tag" style="color:var(--sky)">In Pipeline</div>
-        <div class="success-title">3 Funding Projects in Pipeline</div>
-        <p class="success-desc">CIFER currently has three active funding and innovation projects progressing through evaluation and approval with key government and institutional bodies.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;">
-          <span class="pipeline-flag">🔄 MSME — In Pipeline</span>
-          <span class="pipeline-flag">🔄 iTNT Hub — In Pipeline</span>
-          <span class="pipeline-flag">🔄 TANSEED — In Pipeline</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- LEGAL (moved from home) -->
+  <!-- LEGAL -->
   <div class="about-legal">
     <div class="sec-tag">Legal &amp; Recognition</div>
     <h2 class="sec-title" style="font-size:clamp(28px,3vw,44px)">Formally <span class="accent-mint">Recognised</span></h2>
@@ -775,14 +1072,13 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
 </div><!-- /about -->
 
 
-<!-- ══════════════ PARTNERS ══════════════ -->
+<!-- ═══════════════════════════════════════════
+  PAGE: PARTNERS
+═══════════════════════════════════════════ -->
 <div id="page-partners" class="page">
   <div class="partners-intro">
-    <div>
-      <div class="sec-tag">Ecosystem</div>
-      <h1 class="sec-title">Partners &amp;<br><span class="accent-mint">Clients</span></h1>
-    </div>
-    <p style="font-size:16px;color:var(--gray);line-height:1.8;">CIFER is built on collaboration — with academic institutions, industry leaders, government bodies, and fellow startups. Our clients span students, researchers, product companies, and social enterprises.</p>
+    <div><div class="sec-tag">Ecosystem</div><h1 class="sec-title">Partners &amp;<br><span class="accent-mint">Clients</span></h1></div>
+    <p style="font-size:var(--body-fs);color:var(--gray);line-height:1.8;">CIFER is built on collaboration — with academic institutions, industry leaders, government bodies, and fellow startups. Our clients span students, researchers, product companies, and social enterprises.</p>
   </div>
   <div class="partners-section">
     <div class="partner-category-title">Academic &amp; Institutional Partners</div>
@@ -797,7 +1093,7 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
       <div class="partner-card"><div class="partner-icon">⚙️</div><div class="partner-name">Manufacturing Firms</div><div class="partner-type">Fabrication Partner</div></div>
       <div class="partner-card"><div class="partner-icon">🤖</div><div class="partner-name">Tech Startups</div><div class="partner-type">Co-Innovation Partner</div></div>
       <div class="partner-card"><div class="partner-icon">🌱</div><div class="partner-name">Agri-Tech Companies</div><div class="partner-type">Sector Partner</div></div>
-      <div class="partner-card"><div class="partner-icon">🚁</div><div class="partner-name">Drone & UAV Firms</div><div class="partner-type">Technology Partner</div></div>
+      <div class="partner-card"><div class="partner-icon">🚁</div><div class="partner-name">Drone &amp; UAV Firms</div><div class="partner-type">Technology Partner</div></div>
     </div>
     <div class="partner-category-title">Government &amp; Funding Bodies</div>
     <div class="partners-grid">
@@ -806,21 +1102,23 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
       <div class="partner-card"><div class="partner-icon">🌾</div><div class="partner-name">TANSEED</div><div class="partner-type">Funding Pipeline</div></div>
       <div class="partner-card"><div class="partner-icon">🏭</div><div class="partner-name">EDII ABIRF</div><div class="partner-type">Business Incubation</div></div>
     </div>
-    <div style="height:2px;background:var(--card-border);margin:40px 0;"></div>
+    <div style="height:2px;background:var(--cb);margin:40px 0;"></div>
     <div class="partner-category-title">Our Clients</div>
     <div class="clients-grid">
       <div class="client-card"><div class="client-seg">Students &amp; Competition Teams</div><div class="client-name">SAE / Formula Student</div><div class="client-desc">Competition teams seeking CAD, FEA, and fabrication support for national and international events.</div></div>
       <div class="client-card"><div class="client-seg">Researchers &amp; Faculty</div><div class="client-name">Academic Researchers</div><div class="client-desc">Faculty and PhD scholars pushing research from TRL 3 to prototype-ready, with IP and patent support.</div></div>
       <div class="client-card"><div class="client-seg">Early-Stage Startups</div><div class="client-name">Deep-Tech Founders</div><div class="client-desc">Founders needing an end-to-end build partner — MVP fabrication, pitch decks, fund generation.</div></div>
       <div class="client-card"><div class="client-seg">Social Enterprises</div><div class="client-name">SDG-Driven Organisations</div><div class="client-desc">NGOs and grassroots innovators working on agriculture, water, energy, or rural livelihood challenges.</div></div>
-      <div class="client-card"><div class="client-seg">Industry R&amp;D Units</div><div class="client-name">Corporate Innovation Labs</div><div class="client-desc">Industry teams seeking affordable, agile prototyping and testing partners to accelerate internal innovation.</div></div>
+      <div class="client-card"><div class="client-seg">Industry R&amp;D Units</div><div class="client-name">Corporate Innovation Labs</div><div class="client-desc">Industry teams seeking agile prototyping and testing partners to accelerate internal innovation.</div></div>
       <div class="client-card"><div class="client-seg">Hackathon &amp; Ideathon</div><div class="client-name">Hackathon Teams</div><div class="client-desc">Teams competing nationally who need rapid prototyping, electronics integration, and pitch support.</div></div>
     </div>
   </div>
 </div><!-- /partners -->
 
 
-<!-- ══════════════ CONTACT ══════════════ -->
+<!-- ═══════════════════════════════════════════
+  PAGE: CONTACT — WEB3FORMS INTEGRATION
+═══════════════════════════════════════════ -->
 <div id="page-contact" class="page">
   <div class="contact-hero">
     <div style="padding-bottom:56px">
@@ -829,48 +1127,99 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
       <p class="sec-body" style="margin-bottom:32px">Whether you're a founder, researcher, student, or industry partner — CIFER is ready to Design, Develop, or Disrupt alongside you.</p>
       <div class="contact-info-item"><div class="cii-icon">✉</div><div><div class="cii-label">Email Us</div><div class="cii-val">auto.cifer@gmail.com</div></div></div>
       <div class="contact-info-item"><div class="cii-icon">📞</div><div><div class="cii-label">Call Us</div><div class="cii-val">+91 81247 98952<br>+91 84895 03083</div></div></div>
+      <div class="contact-info-item">
+        <div class="cii-icon">💬</div>
+        <div>
+          <div class="cii-label">WhatsApp</div>
+          <a href="https://wa.me/918489503083?text=Hello%20CIFER%20Team%2C%20I%20would%20like%20to%20enquire." target="_blank" style="color:var(--mint);font-size:var(--body-sm);text-decoration:none;display:flex;align-items:center;gap:8px;margin-top:4px">
+            <svg width="18" height="18" fill="#25D366" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            +91 84895 03083 — Chat Now
+          </a>
+        </div>
+      </div>
       <div class="contact-info-item"><div class="cii-icon">📍</div><div><div class="cii-label">Location</div><div class="cii-val">Tiruchirappalli, Tamil Nadu, India</div></div></div>
-      <div class="contact-info-item"><div class="cii-icon">🕐</div><div><div class="cii-label">Response Time</div><div class="cii-val">Within 24 hours on business days</div></div></div>
       <div class="contact-info-item" style="border-bottom:none">
         <div class="cii-icon">📲</div>
         <div>
           <div class="cii-label">Follow Us</div>
-          <div style="display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;">
-            <a href="https://www.instagram.com/ciferauto/" target="_blank" class="social-btn">📸 @ciferauto</a>
-            <a href="https://www.linkedin.com/company/106472993/admin/dashboard/" target="_blank" class="social-btn">💼 C.I.F.E.R on LinkedIn</a>
+          <div style="margin-top:8px">
+            <a href="https://www.instagram.com/ciferauto/" target="_blank" class="social-btn">📸 @ciferauto on Instagram</a>
+            <a href="https://www.linkedin.com/company/106472993/" target="_blank" class="social-btn">💼 C.I.F.E.R on LinkedIn</a>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- ═══════════════════════════════════════════
+      WEB3FORMS CONTACT FORM
+      ┌─────────────────────────────────────────┐
+      │  HOW TO ACTIVATE:                        │
+      │  1. Go to web3forms.com                  │
+      │  2. Enter auto.cifer@gmail.com           │
+      │  3. Click "Create Form"                  │
+      │  4. Copy your Access Key                 │
+      │  5. Replace YOUR_WEB3FORMS_KEY_HERE      │
+      │     in the hidden input below            │
+      │  Done! Form submissions go to Gmail.     │
+      └─────────────────────────────────────────┘
+    ═══════════════════════════════════════════ -->
     <div style="padding-bottom:56px">
       <div class="contact-form-wrap">
-        <div style="font-family:'Space Mono',sans-serif;font-size:9px;letter-spacing:3px;color:var(--mint);text-transform:uppercase;margin-bottom:28px;">Project Enquiry Form</div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" placeholder="Your name" id="f-name"></div>
-          <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="your@email.com" id="f-email"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">Organisation / College</label><input type="text" class="form-input" placeholder="Where are you from?" id="f-org"></div>
-          <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-input" placeholder="+91 XXXXX XXXXX" id="f-phone"></div>
-        </div>
-        <div class="form-group"><label class="form-label">Service Required</label><select class="form-select" id="f-service"><option value="">Select a division...</option><option>CIFER Studio — Design (CAD, FEA, Pitch Deck)</option><option>CIFER Lab — Development (Prototyping, Fabrication)</option><option>CIFER Solutions — Disruption (SDG, IP, Funding)</option><option>Not sure — need a consultation</option></select></div>
-        <div class="form-group"><label class="form-label">Tell Us About Your Project</label><textarea class="form-textarea" placeholder="Describe your idea, challenge, or requirement..." id="f-msg"></textarea></div>
-        <button class="btn-primary" style="width:100%;justify-content:center" onclick="submitForm()">Send Enquiry <svg width="14" height="12" fill="none" viewBox="0 0 14 12"><path d="M1 6h12M7 1l6 5-6 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <div style="font-family:'Space Mono',sans-serif;font-size:10px;letter-spacing:3px;color:var(--mint);text-transform:uppercase;margin-bottom:28px;">Project Enquiry Form</div>
+
+        <form id="cifer-form" onsubmit="submitForm(event)">
+          <!-- Web3Forms access key — replace with yours from web3forms.com -->
+          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY_HERE">
+          <!-- Subject line in your inbox -->
+          <input type="hidden" name="subject" value="New CIFER Website Enquiry">
+          <!-- Redirect after submit — optional, set to your page URL -->
+          <input type="hidden" name="redirect" value="false">
+          <!-- Honeypot spam protection -->
+          <input type="checkbox" name="botcheck" class="form-hp" tabindex="-1" autocomplete="off">
+
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Full Name *</label><input type="text" name="name" class="form-input" placeholder="Your full name" required></div>
+            <div class="form-group"><label class="form-label">Email Address *</label><input type="email" name="email" class="form-input" placeholder="your@email.com" required></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Organisation / College</label><input type="text" name="organisation" class="form-input" placeholder="Where are you from?"></div>
+            <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" name="phone" class="form-input" placeholder="+91 XXXXX XXXXX"></div>
+          </div>
+          <div class="form-group"><label class="form-label">Service Required</label>
+            <select name="service" class="form-select">
+              <option value="">Select a division...</option>
+              <option>CIFER Studio — Design (CAD, FEA, Pitch Deck)</option>
+              <option>CIFER Lab — Development (Prototyping, Fabrication)</option>
+              <option>CIFER Solutions — Disruption (SDG, IP, Funding)</option>
+              <option>Not sure — need a consultation</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Tell Us About Your Project *</label><textarea name="message" class="form-textarea" placeholder="Describe your idea, challenge, or requirement..." required></textarea></div>
+
+          <button type="submit" class="btn-primary" style="width:100%;justify-content:center" id="submitBtn">
+            Send Enquiry
+            <svg width="14" height="12" fill="none" viewBox="0 0 14 12"><path d="M1 6h12M7 1l6 5-6 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+          <div class="form-status success" id="formSuccess">✓ Enquiry sent! We'll be in touch within 24 hours.</div>
+          <div class="form-status error" id="formError">⚠ Something went wrong. Please email us at auto.cifer@gmail.com</div>
+        </form>
       </div>
     </div>
   </div>
+
+  <!-- GMAIL / QUICK CONNECT -->
   <div class="gmail-login-section">
     <div class="sec-tag" style="justify-content:center">Quick Access</div>
     <h2 class="sec-title">Sign In to <span class="accent-mint">Get Started</span></h2>
     <p class="sec-body" style="margin:0 auto;text-align:center;">Select your service and sign in with Google to connect with our team instantly.</p>
     <div class="gmail-card" style="margin-top:36px">
       <div class="gmail-card-badge">Fast Track Access</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;text-transform:uppercase;margin-bottom:6px;">Choose Your Division</div>
-      <div style="font-size:13px;color:var(--gray);margin-bottom:4px;">We'll route your enquiry to the right team.</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:24px;text-transform:uppercase;margin-bottom:6px;">Choose Your Division</div>
+      <div style="font-size:var(--body-sm);color:var(--gray);margin-bottom:4px;">We'll route your enquiry to the right team.</div>
       <div class="srv-select-grid">
-        <button class="ssb sel-mint" onclick="selectSrv(this,'mint')" data-svc="Studio — We Design">CIFER Studio<br><span style="font-size:9px;opacity:0.7">We Design</span></button>
-        <button class="ssb" onclick="selectSrv(this,'amber')" data-svc="Lab — We Develop">CIFER Lab<br><span style="font-size:9px;opacity:0.7">We Develop</span></button>
-        <button class="ssb" onclick="selectSrv(this,'sky')" data-svc="Solutions — We Disrupt">CIFER Solutions<br><span style="font-size:9px;opacity:0.7">We Disrupt</span></button>
+        <button class="ssb sel-mint" onclick="selectSrv(this,'mint')" data-svc="Studio — We Design">CIFER Studio<br><span style="font-size:11px;opacity:0.7">We Design</span></button>
+        <button class="ssb" onclick="selectSrv(this,'amber')" data-svc="Lab — We Develop">CIFER Lab<br><span style="font-size:11px;opacity:0.7">We Develop</span></button>
+        <button class="ssb" onclick="selectSrv(this,'sky')" data-svc="Solutions — We Disrupt">CIFER Solutions<br><span style="font-size:11px;opacity:0.7">We Disrupt</span></button>
       </div>
       <button class="gmail-btn" onclick="gmailLogin()">
         <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
@@ -882,18 +1231,21 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
 </div><!-- /contact -->
 
 
-<!-- ══ FOOTER ══ -->
+<!-- ═══════════════════════════════════════════
+  FOOTER
+═══════════════════════════════════════════ -->
 <footer>
   <div class="footer-grid">
     <div>
       <div style="display:flex;align-items:center;gap:10px">
-        <div style="width:38px;height:38px;background:var(--mint);display:flex;align-items:center;justify-content:center;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px))"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;color:var(--navy)">CR</span></div>
+        <div style="width:40px;height:40px;background:var(--mint);display:flex;align-items:center;justify-content:center;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px))"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--navy)">CR</span></div>
         <div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:4px">C.I.F.E.R.</div><div style="font-family:'Space Mono',sans-serif;font-size:7px;color:var(--mint);letter-spacing:2px">Design · Develop · Disrupt</div></div>
       </div>
       <p class="footer-brand-text">Centre for Innovation, Fabrication, Engineering &amp; Research. Registered LLP · Udyam (MSME) · Tiruchirappalli, Tamil Nadu.</p>
       <div class="footer-social">
         <a href="https://www.instagram.com/ciferauto/" target="_blank" class="social-btn">📸 @ciferauto</a>
-        <a href="https://www.linkedin.com/company/106472993/admin/dashboard/" target="_blank" class="social-btn">💼 LinkedIn</a>
+        <a href="https://www.linkedin.com/company/106472993/" target="_blank" class="social-btn">💼 LinkedIn</a>
+        <a href="https://wa.me/918489503083" target="_blank" class="social-btn">💬 WhatsApp</a>
       </div>
     </div>
     <div>
@@ -921,7 +1273,7 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
         <li><a href="mailto:auto.cifer@gmail.com">auto.cifer@gmail.com</a></li>
         <li><a href="tel:+918124798952">+91 81247 98952</a></li>
         <li><a href="tel:+918489503083">+91 84895 03083</a></li>
-        <li><span style="font-size:13px;color:var(--gray)">Tiruchirappalli, Tamil Nadu</span></li>
+        <li><a href="https://wa.me/918489503083" target="_blank">WhatsApp Us</a></li>
       </ul>
     </div>
   </div>
@@ -931,50 +1283,55 @@ footer{background:var(--navy-deep);border-top:1px solid var(--card-border);paddi
   </div>
 </footer>
 
+<!-- TOAST -->
 <div class="toast" id="toast"><div class="toast-dot"></div><span id="toastMsg"></span></div>
 
+<!-- ═══════════════════════════════════════════
+  JAVASCRIPT
+═══════════════════════════════════════════ -->
 <script>
-// ── LOGO: use the uploaded WhatsApp image ──
-// The user's logo file is available — set src to the uploaded image path
-(function(){
-  const img = document.getElementById('navLogoImg');
-  // Try to use the uploaded logo image (base64 embedded via file upload)
-  // Since we can't embed the file directly in JS, we show the SVG fallback which mirrors the logo
-  document.getElementById('navLogoFallback').style.display = 'flex';
-  img.style.display = 'none';
-})();
-
-// ── PULLER DATA ──
-const pullerItems = [
+/* ── PULLER ITEMS ── */
+const pullerItems=[
   {icon:'🚀',text:'Hey, <em>Future Founder!</em> Got an idea that deserves to be real?',cta:'We make it happen →'},
   {icon:'📊',text:'Need a <em>Pitch Deck</em> that wins investors over?',cta:'CIFER Studio →'},
   {icon:'💰',text:'Struggling to <em>secure funding</em> for your startup or research project?',cta:'We navigate it →'},
   {icon:'🔒',text:'Want to <em>protect your intellectual property</em> before someone else does?',cta:'We file it →'},
   {icon:'🛠️',text:'Got a design that needs to become a <em>real working prototype?</em>',cta:'CIFER Lab builds →'},
-  {icon:'🎯',text:'Competing in SAE Baja or Formula Student? Need <em>expert CAD &amp; FEA support?</em>',cta:'Studio\'s ready →'},
+  {icon:'🎯',text:'Competing in SAE Baja or Formula Student? Need <em>expert CAD &amp; FEA support?</em>',cta:"Studio's ready →"},
   {icon:'🌾',text:'Building for <em>agriculture, drones, or the blue economy?</em> We get it.',cta:'Solutions awaits →'},
   {icon:'📈',text:'Research stuck at <em>TRL 3?</em> We push it all the way to market.',cta:'Bridge the gap →'},
   {icon:'🤝',text:'Looking for a <em>mentor, collaborator, or innovation partner?</em>',cta:'Join CIFER →'},
   {icon:'📝',text:'Need help with <em>patent filing, IP strategy,</em> or tech transfer?',cta:'We navigate it →'},
   {icon:'⚙️',text:'Need <em>CNC, 3D printing, IoT,</em> or laser cutting for your project?',cta:'CIFER Lab is it →'},
-  {icon:'🎓',text:'Are you a <em>student team</em> with a big idea and no resources to build it?',cta:'Let\'s talk →'},
+  {icon:'🎓',text:'Are you a <em>student team</em> with a big idea and no resources to build it?',cta:"Let's talk →"},
 ];
 
 function buildPuller(){
-  const track=document.getElementById('pullerTrack');
-  const all=[...pullerItems,...pullerItems];
-  track.innerHTML=all.map(p=>`<div class="puller-item" onclick="navigate('contact')"><span class="pi-icon">${p.icon}</span><span class="pi-text">${p.text}</span><span class="pi-cta">${p.cta}</span></div>`).join('');
+  const t=document.getElementById('pullerTrack');
+  const a=[...pullerItems,...pullerItems];
+  t.innerHTML=a.map(p=>`<div class="puller-item" onclick="navigate('contact')"><span class="pi-icon">${p.icon}</span><span class="pi-text">${p.text}</span><span class="pi-cta">${p.cta}</span></div>`).join('');
 }
 
-// ── SECTORS — updated list ──
+/* ── SECTORS MARQUEE ── */
 const sectorItems=['Agriculture & Rural Innovation','Drones & Robotics','Quantum Technology','Blue & Circular Economy','Green Manufacturing','Med Techs','3D Printing & Fabrication'];
 function buildSectors(){
-  const track=document.getElementById('sectorsTrack');
-  const all=[...sectorItems,...sectorItems,...sectorItems];
-  track.innerHTML=all.map((s,i)=>`<div class="sector-tag-item${i%3===0?' hi':''}">${s} <span style="color:rgba(200,230,192,0.15);margin-left:4px">◆</span></div>`).join('');
+  const t=document.getElementById('sectorsTrack');
+  const a=[...sectorItems,...sectorItems,...sectorItems];
+  t.innerHTML=a.map((s,i)=>`<div class="sector-tag-item${i%3===0?' hi':''}">${s} <span style="color:rgba(200,230,192,0.15);margin-left:4px">◆</span></div>`).join('');
 }
 
-// ── NAVIGATION ──
+/* ── SECTORS EXPAND ── */
+let sectorsExpanded=false;
+function toggleSectors(){
+  sectorsExpanded=!sectorsExpanded;
+  document.querySelectorAll('.hidden-sector').forEach(el=>{
+    el.style.display=sectorsExpanded?'block':'none';
+  });
+  document.getElementById('seeMoreTxt').textContent=sectorsExpanded?'Show Less':'Show More Sectors';
+  document.getElementById('seeMoreArrow').textContent=sectorsExpanded?'↑':'↓';
+}
+
+/* ── NAVIGATION ── */
 function navigate(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-link,.mobile-link').forEach(l=>l.classList.remove('active'));
@@ -982,17 +1339,15 @@ function navigate(page){
   document.querySelectorAll('[data-page="'+page+'"]').forEach(l=>l.classList.add('active'));
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
 function openService(tab){
   navigate('services');
-  setTimeout(()=>switchTab(tab),100);
+  setTimeout(()=>switchTab(tab),120);
 }
-
 function toggleMobile(){
   document.getElementById('mobileMenu').classList.toggle('open');
 }
 
-// ── SERVICE TABS ──
+/* ── SERVICE TABS ── */
 function switchTab(tab){
   ['studio','lab','sol'].forEach(t=>{
     document.getElementById('tab-'+t).className='srv-tab';
@@ -1002,7 +1357,46 @@ function switchTab(tab){
   document.getElementById('panel-'+tab).classList.add('active');
 }
 
-// ── GMAIL ──
+/* ── WEB3FORMS SUBMIT ── */
+async function submitForm(e){
+  e.preventDefault();
+  const btn=document.getElementById('submitBtn');
+  const successEl=document.getElementById('formSuccess');
+  const errorEl=document.getElementById('formError');
+  successEl.style.display='none';
+  errorEl.style.display='none';
+  btn.textContent='Sending...';
+  btn.disabled=true;
+
+  const formData=new FormData(e.target);
+  const obj=Object.fromEntries(formData);
+  const json=JSON.stringify(obj);
+
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:json
+    });
+    const data=await res.json();
+    if(data.success){
+      successEl.style.display='block';
+      e.target.reset();
+      showToast('✓ Enquiry sent! Check your inbox for confirmation.');
+    } else {
+      errorEl.style.display='block';
+      showToast('Something went wrong. Please email us directly.');
+    }
+  } catch(err){
+    errorEl.style.display='block';
+    showToast('Network error. Please email auto.cifer@gmail.com');
+  }
+
+  btn.innerHTML='Send Enquiry <svg width="14" height="12" fill="none" viewBox="0 0 14 12"><path d="M1 6h12M7 1l6 5-6 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  btn.disabled=false;
+}
+
+/* ── GMAIL QUICK CONNECT ── */
 let selectedSvc='Studio — We Design';
 function selectSrv(btn,type){
   document.querySelectorAll('.ssb').forEach(b=>{b.className='ssb';});
@@ -1016,29 +1410,37 @@ function gmailLogin(){
   showToast('Opening Gmail — connecting you to CIFER!');
 }
 
-// ── FORM ──
-function submitForm(){
-  const fields=['f-name','f-email','f-org','f-phone','f-service','f-msg'];
-  let ok=true;
-  fields.forEach(id=>{if(!document.getElementById(id).value)ok=false;});
-  if(!ok){showToast('Please fill in all fields first.');return;}
-  showToast('Enquiry sent! We\'ll be in touch within 24 hours.');
-  fields.forEach(id=>{document.getElementById(id).value='';});
-}
-
+/* ── TOAST ── */
 function showToast(msg){
   const t=document.getElementById('toast');
   document.getElementById('toastMsg').textContent=msg;
   t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3800);
+  setTimeout(()=>t.classList.remove('show'),4000);
 }
 
-// ── INIT ──
+/* ── PHOTO LOADER — sets src from data-photo attr ── */
+function loadPhotos(){
+  document.querySelectorAll('[data-photo]').forEach(el=>{
+    const url=el.getAttribute('data-photo');
+    if(url && !url.includes('PHOTO_URL_HERE') && !url.includes('SUCCESS_PHOTO')){
+      el.src=url;
+      el.style.display='block';
+      const ph=el.nextElementSibling;
+      if(ph && ph.classList.contains('photo-placeholder')) ph.style.display='none';
+      if(ph && ph.classList.contains('sph-placeholder')) ph.style.display='none';
+    }
+  });
+}
+
+/* ── NAV SCROLL ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.borderBottomColor=window.scrollY>40?'rgba(200,230,192,0.22)':'rgba(200,230,192,0.08)';
+});
+
+/* ── INIT ── */
 buildPuller();
 buildSectors();
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').style.borderBottomColor=window.scrollY>40?'rgba(200,230,192,0.2)':'rgba(200,230,192,0.08)';
-});
+loadPhotos();
 </script>
 </body>
 </html>

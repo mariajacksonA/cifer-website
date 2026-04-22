@@ -101,6 +101,32 @@ body{font-family:'Barlow',sans-serif;font-size:var(--body-fs);background:var(--n
   opacity:0;
 }
 .wa-float:hover .wa-label{max-width:260px;opacity:1;}
+   
+.ig-float{
+  position:fixed;bottom:98px;right:28px;z-index:998;
+  display:flex;align-items:center;gap:0;flex-direction:row-reverse;
+  cursor:pointer;text-decoration:none;
+}
+.ig-bubble{
+  width:58px;height:58px;border-radius:50%;
+  background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(214,36,159,0.38);
+  transition:transform 0.3s var(--tr),box-shadow 0.3s;
+  flex-shrink:0;
+}
+.ig-float:hover .ig-bubble{transform:scale(1.12);box-shadow:0 6px 28px rgba(214,36,159,0.52);}
+.ig-label{
+  background:#d6249f;color:#fff;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;
+  padding:10px 14px 10px 18px;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%);
+  white-space:nowrap;
+  max-width:0;overflow:hidden;
+  transition:max-width 0.4s var(--tr),opacity 0.3s;
+  opacity:0;
+}
+.ig-float:hover .ig-label{max-width:260px;opacity:1;}
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    HOME — HERO

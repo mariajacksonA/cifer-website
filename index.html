@@ -77,8 +77,8 @@ body{font-family:'Barlow',sans-serif;font-size:var(--body-fs);background:var(--n
    WHATSAPP FLOATING BUTTON
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .wa-float{
-  position:fixed;bottom:28px;left:28px;z-index:998;
-  display:flex;align-items:center;gap:0;
+   position:fixed;bottom:28px;right:28px;z-index:998;
+  display:flex;align-items:center;gap:0;flex-direction:row-reverse;
   cursor:pointer;text-decoration:none;
 }
 .wa-bubble{
@@ -93,8 +93,8 @@ body{font-family:'Barlow',sans-serif;font-size:var(--body-fs);background:var(--n
 .wa-label{
   background:#25D366;color:#fff;
   font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;
-  padding:10px 18px 10px 14px;
-  clip-path:polygon(12px 0,100% 0,100% 100%,0 100%,0 50%);
+  padding:10px 14px 10px 18px;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%);
   white-space:nowrap;
   max-width:0;overflow:hidden;
   transition:max-width 0.4s var(--tr),opacity 0.3s;
@@ -522,24 +522,8 @@ footer{background:var(--navy-deep);border-top:1px solid var(--cb);padding:56px 5
 <nav id="nav">
   <button class="nav-brand" onclick="navigate('home')">
     <div class="nav-logo-wrap">
-      <!-- 
-        ┌──────────────────────────────────────────┐
-        │  LOGO IMAGE — HOW TO ADD YOUR LOGO:      │
-        │  1. Upload your logo to imgbb.com (free) │
-        │  2. Copy the "Direct link" URL           │
-        │  3. Replace the src below with that URL  │
-        └──────────────────────────────────────────┘
-      -->
-      <img src="YOUR_LOGO_URL_HERE" alt="CIFER Logo"
-        onerror="this.style.display='none'"
-        id="navLogoImg" style="display:none">
-      <!-- SVG Fallback logo — mirrors your brand mark -->
-      <div class="nav-logo-svg" id="navLogoFallback">
-        <svg viewBox="0 0 110 28" height="28" xmlns="http://www.w3.org/2000/svg">
-          <text x="0" y="23" font-family="'Barlow Condensed',sans-serif" font-weight="900" font-size="26" fill="#0B1E3D" letter-spacing="2">CIFER</text>
-        </svg>
-      </div>
-    </div>
+     <img src="images/logo.png" alt="CIFER Logo" id="navLogoImg">
+   </div>
     <div class="nav-tagline-wrap">
       <div class="nav-tagline">Design · Develop · Disrupt</div>
     </div>
@@ -1239,7 +1223,7 @@ footer{background:var(--navy-deep);border-top:1px solid var(--cb);padding:56px 5
   <div class="footer-grid">
     <div>
       <div style="display:flex;align-items:center;gap:10px">
-        <div style="width:40px;height:40px;background:var(--mint);display:flex;align-items:center;justify-content:center;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px))"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--navy)">CR</span></div>
+       <img src="images/logosmall.jpg" alt="CIFER Footer Logo" style="width:40px;height:40px;object-fit:cover;display:block;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px))">
         <div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:4px">C.I.F.E.R.</div><div style="font-family:'Space Mono',sans-serif;font-size:7px;color:var(--mint);letter-spacing:2px">Design · Develop · Disrupt</div></div>
       </div>
       <p class="footer-brand-text">Centre for Innovation, Fabrication, Engineering &amp; Research. Registered LLP · Udyam (MSME) · Tiruchirappalli, Tamil Nadu.</p>
